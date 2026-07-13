@@ -1,1 +1,10 @@
+progress = LearnerProgress(
+    ...
+)
 
+signals = compute_risk_signals(...)
+assert not signals.at_risk
+assert signals.missed_deadlines
+assert signals.inactive
+signals.score == 3
+if progress.inactive_days >= thresholds.inactivity_days:
