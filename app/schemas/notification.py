@@ -31,8 +31,7 @@ class NotificationPayload(BaseModel):
     """Payloads => content of the notification."""
     title: str
     body: str
-    metadata: dict = {}
-
+    metadata: dict = Field(default_factory=dict)
 
 class Notification(BaseModel):
     """A single notification instance uniquely identified by the dedup_key.

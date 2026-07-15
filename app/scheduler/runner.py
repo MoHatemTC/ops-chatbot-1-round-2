@@ -11,9 +11,9 @@ def deliver_with_retry(notification: Notification, deliver_fn) -> Notification:
     Retries with exponential backoff if delivery raises an exception,
     waiting between 1 and 10 seconds between attempts.
     """
-    return deliver_fn(notification)
+    return send_notification(notification, deliver_action=deliver_fn)
 
-def run_notification(notification: Notification, deliver_fn=send_notification) -> Notification:
+def run_notification(notification: Notification, deliver_fn=None) -> Notification:
     """Run a notification delivery job with retry/backoff.
 
     If all retry attempts are exhausted, mark the notification FAILED.
@@ -23,3 +23,15 @@ def run_notification(notification: Notification, deliver_fn=send_notification) -
     except Exception:
         notification.status = NotificationStatus.FAILED
         return notification
+
+def run_scheduled_jobs(notifications: list[Notification], deliver_fn=None) -> list[Notification]:
+    """Run a batch of notification jobs, delivering each with retry/backoff.
+
+    Processes every notification in the list independently — one job
+    failing does not stop the rest of the batch from running.
+    """
+    results = []
+    for notification in notifications:
+        result = run_notification(notification, deliver_fn=deliver_fn)
+        results.append(result)
+    return results
