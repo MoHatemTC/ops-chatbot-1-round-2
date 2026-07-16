@@ -8,6 +8,13 @@ and other external integrations.
 from langchain_core.tools.base import BaseTool
 
 from .ask_human import ask_human
-from .duckduckgo_search import duckduckgo_search_tool
+from .escalate_to_human import escalate_to_human
 
-tools: list[BaseTool] = [duckduckgo_search_tool, ask_human]
+tools: list[BaseTool] = [ask_human, escalate_to_human]
+
+try:
+    from .duckduckgo_search import duckduckgo_search_tool
+except ImportError:
+    duckduckgo_search_tool = None
+else:
+    tools.insert(0, duckduckgo_search_tool)

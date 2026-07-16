@@ -196,7 +196,12 @@ class LangGraphAgent:
         tool_calls = state.messages[-1].tool_calls
 
         async def _execute_tool(tool_call: dict) -> ToolMessage:
-            tool_result = await self.tools_by_name[tool_call["name"]].ainvoke(tool_call["args"])
+            tool_args = dict(tool_call["args"])
+            if tool_call["name"] == "escalate_to_human":
+                tool_args.setdefault("session_id", state.session_id)
+                tool_args.setdefault("user_id", state.user_id)
+
+            tool_result = await self.tools_by_name[tool_call["name"]].ainvoke(tool_args)
             return ToolMessage(
                 content=tool_result,
                 name=tool_call["name"],
@@ -323,7 +328,12 @@ class LangGraphAgent:
             else:
                 relevant_memory = relevant_memory or "No relevant memory found."
                 response = await graph.ainvoke(
-                    input={"messages": dump_messages(messages), "long_term_memory": relevant_memory},
+                    input={
+                        "messages": dump_messages(messages),
+                        "long_term_memory": relevant_memory,
+                        "session_id": session_id,
+                        "user_id": user_id,
+                    },
                     config=config,
                 )
 
@@ -390,7 +400,12 @@ class LangGraphAgent:
                 graph_input = Command(resume=messages[-1].content)
             else:
                 relevant_memory = relevant_memory or "No relevant memory found."
-                graph_input = {"messages": dump_messages(messages), "long_term_memory": relevant_memory}
+                graph_input = {
+                    "messages": dump_messages(messages),
+                    "long_term_memory": relevant_memory,
+                    "session_id": session_id,
+                    "user_id": user_id,
+                }
 
             async for token, _ in graph.astream(
                 graph_input,

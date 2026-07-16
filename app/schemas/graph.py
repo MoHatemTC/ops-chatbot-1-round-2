@@ -16,3 +16,5 @@ class GraphState(BaseModel):
         default_factory=list, description="The messages in the conversation"
     )
     long_term_memory: str = Field(default="", description="The long term memory of the conversation")
+    session_id: str | None = Field(default=None, description="Session identifier for tool and trace metadata")
+    user_id: str | None = Field(default=None, description="User identifier for tool and trace metadata")
