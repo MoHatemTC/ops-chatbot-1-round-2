@@ -1,3 +1,22 @@
+"""Cohort-scoped semantic retrieval for approved Operations materials.
+
+The write side of the knowledge base lives in the ingestion lane and stores
+embedded chunks in the 'knowledge_chunks' pgvector table. This module
+implements the read side used by grounded answering:
+
+1. validate and normalize the learner query;
+2. embed it with the same embedding model used during ingestion;
+3. run a cosine-distance search against 'knowledge_chunks';
+4. enforce cohort isolation;
+5. discard weak matches; and
+6. return typed chunks with complete source metadata.
+
+Retrieval fails closed. If embedding generation or database search fails, the
+public API returns an empty list and logs the internal error. The answer node
+can then produce the required honest refusal instead of answering without
+approved evidence.
+"""
+
 import asyncio
 import os
 from functools import lru_cache
@@ -32,13 +51,13 @@ class RetrievedChunk(BaseModel):
         source_id: Stable identity of the parent source, including its cohort.
         title: Human-readable title shown in source attribution.
         source: Original file path or URL of the approved material.
-        source_type: Material category, such as ``faq`` or ``schedule``.
+        source_type: Material category, such as 'faq' or 'schedule'.
         cohort: Cohort that owns this source.
         content_hash: Hash of the source version used during ingestion.
         chunk_index: Zero-based position of this chunk in its source.
         content: Retrieved text supplied to the grounded-answer prompt.
         distance: Raw pgvector cosine distance; lower is better.
-        similarity: ``1 - distance``; higher is better.
+        similarity: '1 - distance'; higher is better.
     """
 
     source_id: str
@@ -109,7 +128,7 @@ class OpenAIQueryEmbedder:
 
 
 def _to_vector_literal(embedding: list[float]) -> str:
-    """Render a numeric vector as a pgvector literal."""
+    """Render a numeric vector as a pgvector literal like '[1,2,3]'."""
     if not embedding:
         raise ValueError("query embedding must not be empty")
     return "[" + ",".join(repr(value) for value in embedding) + "]"
@@ -119,7 +138,11 @@ class PgVectorChunkSearchRepository:
     """Search the 'knowledge_chunks' table with cosine distance."""
 
     def __init__(self, engine: Engine) -> None:
-        """Store the shared SQLAlchemy engine."""
+        """Store the shared SQLAlchemy engine.
+
+        The retriever intentionally does not create or migrate the table.
+        The ingestion lane owns that schema and must run before retrieval.
+        """
         self._engine = engine
 
     def search(
@@ -131,7 +154,7 @@ class PgVectorChunkSearchRepository:
     ) -> list[RetrievedChunk]:
         """Return nearest chunks from the requested cohort.
 
-        ``embedding <=> query`` is pgvector cosine distance. It is computed once
+        'embedding <=> query' is pgvector cosine distance. It is computed once
         in a subquery so ordering and returned metadata use the same value.
         Parameter binding is used for all user-controlled values.
         """
@@ -218,7 +241,7 @@ class KnowledgeRetriever:
                 evaluation set before production rollout.
 
         Raises:
-            ValueError: If ``min_similarity`` is outside the cosine-similarity
+            ValueError: If 'min_similarity' is outside the cosine-similarity
                 range accepted by this application.
         """
         if not 0.0 <= min_similarity <= 1.0:
@@ -249,7 +272,7 @@ class KnowledgeRetriever:
             Relevant chunks ordered from highest to lowest similarity.
 
         Raises:
-            ValueError: If ``top_k`` is outside the supported range.
+            ValueError: If 'top_k' is outside the supported range.
         """
         normalized_query = " ".join(query.split())
         normalized_cohort = cohort.strip()
