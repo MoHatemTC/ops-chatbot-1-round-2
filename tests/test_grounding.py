@@ -192,7 +192,11 @@ def test_grounded_answer_returns_answer_and_validated_source(monkeypatch: pytest
     message = result["messages"][0]
     metadata = _grounding_metadata(result)
 
-    assert message.content == "Submit the project through the learner portal. [S2]"
+    assert message.content == (
+        "Submit the project through the learner portal. [S2]\n\n"
+        "Sources:\n"
+        "- [S2] Submission FAQ — faqs/submission.md (chunk 1)"
+    )
     assert retrieval_call == {
         "query": "Where should I submit the project?",
         "cohort": "cohort-a",
