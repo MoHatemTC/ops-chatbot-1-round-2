@@ -54,6 +54,50 @@ class NoopEscalationTrigger:
 escalation_trigger: EscalationTrigger = NoopEscalationTrigger()
 
 
+class DatabaseEscalationTrigger:
+    """Escalation trigger that persists tickets in the application database."""
+
+    async def trigger(self, request: EscalationTriggerRequest) -> EscalationTriggerResult:
+        try:
+            from app.services.database import database_service
+        except ModuleNotFoundError:
+            logger.warning(
+                "database_escalation_trigger_dependency_missing",
+                source=request.source.value,
+                session_id=request.session_id,
+                user_id=request.user_id,
+            )
+            return await NoopEscalationTrigger().trigger(request)
+
+        ticket = await database_service.create_escalation_ticket(
+            source=request.source.value,
+            reason=request.reason,
+            status=request.ticket.status.value,
+            problem=request.ticket.problem,
+            what_was_tried=request.ticket.what_was_tried,
+            context=request.ticket.context,
+            suggested_next_step=request.ticket.suggested_next_step,
+            summary=request.conversation_summary.summary,
+            user_goal=request.conversation_summary.user_goal,
+            key_facts=request.conversation_summary.key_facts,
+            assistant_actions=request.conversation_summary.assistant_actions,
+            open_questions=request.conversation_summary.open_questions,
+            privacy_note=request.conversation_summary.privacy_note,
+            session_id=request.session_id,
+            user_id=request.user_id,
+        )
+
+        return EscalationTriggerResult(
+            triggered=True,
+            status=request.ticket.status,
+            ticket_id=ticket.id,
+            message=f"Escalation stored successfully with ticket ID {ticket.id}.",
+        )
+
+
+escalation_trigger: EscalationTrigger = DatabaseEscalationTrigger()
+
+
 async def trigger_escalation(request: EscalationTriggerRequest) -> EscalationTriggerResult:
     """Trigger an escalation request through the configured backend."""
     return await escalation_trigger.trigger(request)

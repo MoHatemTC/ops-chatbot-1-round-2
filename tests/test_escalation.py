@@ -16,7 +16,7 @@ from app.schemas.escalation import (
     TicketStatus,
 )
 from app.services import escalation as escalation_service
-from app.services.escalation import NoopEscalationTrigger
+from app.services.escalation import DatabaseEscalationTrigger, NoopEscalationTrigger
 
 escalate_to_human_module = importlib.import_module("app.core.langgraph.tools.escalate_to_human")
 escalate_to_human = escalate_to_human_module.escalate_to_human
@@ -148,6 +148,42 @@ def test_noop_escalation_trigger_returns_stable_result():
     assert result.status == request.ticket.status
     assert result.ticket_id is None
     assert "No external ticket was created" in result.message
+
+
+def test_database_escalation_trigger_returns_persisted_ticket_id(monkeypatch: pytest.MonkeyPatch):
+    request = EscalationTriggerRequest(
+        source=EscalationSource.ANSWERING,
+        reason="No grounded answer found in approved Operations materials.",
+        ticket=build_valid_ticket(),
+        conversation_summary=build_valid_summary(),
+        session_id="session_123",
+        user_id="user_456",
+    )
+
+    class FakeDatabaseService:
+        async def create_escalation_ticket(self, **kwargs):
+            assert kwargs["source"] == "answering"
+            assert kwargs["session_id"] == "session_123"
+            assert kwargs["user_id"] == "user_456"
+
+            class TicketRecord:
+                id = "esc_123abc"
+
+            return TicketRecord()
+
+    import sys
+    import types
+
+    fake_module = types.ModuleType("app.services.database")
+    fake_module.database_service = FakeDatabaseService()
+    monkeypatch.setitem(sys.modules, "app.services.database", fake_module)
+
+    result = asyncio.run(DatabaseEscalationTrigger().trigger(request))
+
+    assert result.triggered is True
+    assert result.ticket_id == "esc_123abc"
+    assert result.status == TicketStatus.OPEN
+    assert "esc_123abc" in result.message
 
 
 def test_trigger_answering_escalation_builds_valid_request(monkeypatch: pytest.MonkeyPatch):

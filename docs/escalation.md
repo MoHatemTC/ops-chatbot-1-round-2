@@ -4,15 +4,16 @@
 
 This document defines the escalation contract and answering-flow wiring for the Escalation & Tickets lane.
 
-The scaffold provides:
+The implementation provides:
 
 - a strict shared `Ticket` schema
 - a privacy-preserving `ConversationSummary` schema
 - an `EscalationTrigger` interface
 - a default `NoopEscalationTrigger` implementation
+- a database-backed `DatabaseEscalationTrigger` that stores internal ticket records
 - an `escalate_to_human` LangGraph tool wired into the answering flow
 
-This is groundwork for F1.4-F1.6. It does not create real external tickets yet.
+This is groundwork for F1.4-F1.6. It now creates internal persisted ticket records, but it does not create real external third-party tickets yet.
 
 ## Scope
 
@@ -23,13 +24,13 @@ In scope:
 - Provide an interface that answering and proactive flows can call.
 - Provide helper entry points for both answering and proactive escalation callers.
 - Log scaffold escalations in a structured way.
-- Return a stable trigger result.
+- Return a stable trigger result with a real internal `ticket_id`.
 - Wire the answering flow to a real caller via the LangGraph tool layer.
+- Persist internal escalation records in the application database.
 
 Out of scope for this scaffold:
 
 - External ticketing workspace integration.
-- Ticket persistence.
 - Ops ticket list/view/resolve APIs.
 - Proactive automation that triggers escalations without an answering-tool call.
 
@@ -44,7 +45,7 @@ The answering flow now has a concrete integration point:
 - the graph injects `session_id` and `user_id` from `GraphState` before invoking the tool
 - the configured `escalation_trigger` handles the request and returns a stable handoff result
 
-Today this still lands in the scaffold `NoopEscalationTrigger`, so the app records the escalation without creating an external ticket.
+By default the app now uses `DatabaseEscalationTrigger`, which stores the escalation in the application database and returns a real internal ticket reference. If the database dependency is unavailable in a lightweight test environment, the code falls back to `NoopEscalationTrigger` so schema-level tests can still run in isolation.
 
 For proactive callers, the service now also exposes a dedicated `trigger_proactive_escalation(...)` helper that builds the same validated contract with `source="proactive"`.
 

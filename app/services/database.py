@@ -1,5 +1,6 @@
 """This file contains the database service for the application."""
 
+from uuid import uuid4
 from typing import (
     List,
     Optional,
@@ -20,6 +21,7 @@ from app.core.config import (
     settings,
 )
 from app.core.logging import logger
+from app.models.escalation_ticket import EscalationTicket
 from app.models.session import Session as ChatSession
 from app.models.user import User
 
@@ -248,6 +250,58 @@ class DatabaseService:
         except Exception as e:
             logger.error("database_health_check_failed", error=str(e))
             return False
+
+    async def create_escalation_ticket(
+        self,
+        *,
+        source: str,
+        reason: str,
+        status: str,
+        problem: str,
+        what_was_tried: str,
+        context: str,
+        suggested_next_step: str,
+        summary: str,
+        user_goal: str,
+        key_facts: list[str],
+        assistant_actions: list[str],
+        open_questions: list[str],
+        privacy_note: str,
+        session_id: str | None = None,
+        user_id: str | None = None,
+    ) -> EscalationTicket:
+        """Persist a new escalation ticket and return the stored record."""
+        with Session(self.engine) as session:
+            ticket = EscalationTicket(
+                id=f"esc_{uuid4().hex[:12]}",
+                source=source,
+                reason=reason,
+                status=status,
+                problem=problem,
+                what_was_tried=what_was_tried,
+                context=context,
+                suggested_next_step=suggested_next_step,
+                summary=summary,
+                user_goal=user_goal,
+                key_facts=key_facts,
+                assistant_actions=assistant_actions,
+                open_questions=open_questions,
+                privacy_note=privacy_note,
+                session_id=session_id,
+                user_id=user_id,
+            )
+            session.add(ticket)
+            session.commit()
+            session.refresh(ticket)
+            logger.info(
+                "escalation_ticket_created",
+                ticket_id=ticket.id,
+                source=source,
+                status=status,
+                session_id=session_id,
+                user_id=user_id,
+            )
+            return ticket
 
 
 # Create a singleton instance
