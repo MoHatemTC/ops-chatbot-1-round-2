@@ -8,6 +8,16 @@ from app.schemas.chat import (
     Message,
     StreamResponse,
 )
+
+from app.schemas.escalation import (
+    ConversationSummary,
+    EscalationSource,
+    EscalationTriggerRequest,
+    EscalationTriggerResult,
+    Ticket,
+    TicketStatus,
+)
+
 from app.schemas.graph import GraphState
 
 __all__ = [
@@ -18,4 +28,11 @@ __all__ = [
     "Message",
     "StreamResponse",
     "GraphState",
+    "ConversationSummary",
+    "EscalationSource",
+    "EscalationTriggerRequest",
+    "EscalationTriggerResult",
+    "Ticket",
+    "TicketStatus",
 ]
+
