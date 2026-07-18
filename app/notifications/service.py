@@ -66,6 +66,11 @@ def send_notification(notification: Notification, deliver_action=None) -> Notifi
                     return notification
                 record = existing
 
+        # Type guard للـ Pyright عشان يتأكد إن الكائن مش None ومستحيل يضرب
+        if record is None:
+            notification.status = NotificationStatus.FAILED
+            return notification
+
         if deliver_action is not None:
             deliver_action(notification)  # if this raises, propagate — tenacity needs to see it
 
