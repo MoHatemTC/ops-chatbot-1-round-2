@@ -158,8 +158,7 @@ class PgVectorChunkSearchRepository:
         in a subquery so ordering and returned metadata use the same value.
         Parameter binding is used for all user-controlled values.
         """
-        statement = text(
-            f"""
+        statement = text(f"""
             SELECT
                 source_id,
                 cohort,
@@ -187,8 +186,7 @@ class PgVectorChunkSearchRepository:
             ) AS ranked_chunks
             ORDER BY distance ASC
             LIMIT :limit
-            """
-        )
+            """)
 
         with Session(self._engine) as session:
             rows = session.execute(
