@@ -115,15 +115,11 @@ class TestIndividualIndicators:
         assert RiskIndicator.MISSED_DEADLINES not in signal.triggered_indicators
 
     def test_inactivity_triggers(self, thresholds):
-        signal = compute_signal(
-            make_progress(last_active_at=NOW - timedelta(days=10)), thresholds
-        )
+        signal = compute_signal(make_progress(last_active_at=NOW - timedelta(days=10)), thresholds)
         assert RiskIndicator.INACTIVITY in signal.triggered_indicators
 
     def test_inactivity_at_threshold_does_not_trigger(self, thresholds):
-        signal = compute_signal(
-            make_progress(last_active_at=NOW - timedelta(days=5)), thresholds
-        )
+        signal = compute_signal(make_progress(last_active_at=NOW - timedelta(days=5)), thresholds)
         assert RiskIndicator.INACTIVITY not in signal.triggered_indicators
 
     def test_never_active_does_not_trigger_inactivity(self, thresholds):
@@ -132,22 +128,16 @@ class TestIndividualIndicators:
         assert RiskIndicator.INACTIVITY not in signal.triggered_indicators
 
     def test_low_progress_triggers(self, thresholds):
-        signal = compute_signal(
-            make_progress(total_tasks=10, completed_tasks=2), thresholds
-        )
+        signal = compute_signal(make_progress(total_tasks=10, completed_tasks=2), thresholds)
         assert RiskIndicator.LOW_PROGRESS in signal.triggered_indicators
 
     def test_progress_at_threshold_does_not_trigger(self, thresholds):
-        signal = compute_signal(
-            make_progress(total_tasks=10, completed_tasks=5), thresholds
-        )
+        signal = compute_signal(make_progress(total_tasks=10, completed_tasks=5), thresholds)
         assert RiskIndicator.LOW_PROGRESS not in signal.triggered_indicators
 
     def test_low_feedback_triggers(self, thresholds):
         signal = compute_signal(
-            make_progress(
-                recent_feedback=[FeedbackEntry(score=1.0, submitted_at=NOW)]
-            ),
+            make_progress(recent_feedback=[FeedbackEntry(score=1.0, submitted_at=NOW)]),
             thresholds,
         )
         assert RiskIndicator.LOW_FEEDBACK in signal.triggered_indicators

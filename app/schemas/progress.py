@@ -18,9 +18,7 @@ from pydantic import BaseModel, Field, computed_field, field_validator
 class FeedbackEntry(BaseModel):
     """A single piece of learner-submitted feedback (e.g. a session or task rating)."""
 
-    score: float = Field(
-        ..., ge=0, le=5, description="Feedback score on a 0-5 scale (5 = most positive)."
-    )
+    score: float = Field(..., ge=0, le=5, description="Feedback score on a 0-5 scale (5 = most positive).")
     submitted_at: datetime = Field(..., description="UTC timestamp the feedback was submitted.")
 
     @field_validator("submitted_at")
@@ -50,9 +48,7 @@ class LearnerProgress(BaseModel):
 
     total_tasks: int = Field(..., ge=0, description="Total tasks assigned to the learner so far.")
     completed_tasks: int = Field(..., ge=0, description="Tasks the learner has completed.")
-    missed_deadlines: int = Field(
-        default=0, ge=0, description="Count of task/project deadlines missed to date."
-    )
+    missed_deadlines: int = Field(default=0, ge=0, description="Count of task/project deadlines missed to date.")
 
     last_active_at: datetime | None = Field(
         default=None,

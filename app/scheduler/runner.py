@@ -1,4 +1,5 @@
 """Runner handles notification sending retries."""
+
 from tenacity import retry, stop_after_attempt, wait_exponential
 from app.schemas.notification import Notification, NotificationStatus
 from app.notifications.service import send_notification
@@ -13,6 +14,7 @@ def deliver_with_retry(notification: Notification, deliver_fn) -> Notification:
     """
     return send_notification(notification, deliver_action=deliver_fn)
 
+
 def run_notification(notification: Notification, deliver_fn=None) -> Notification:
     """Run a notification delivery job with retry/backoff.
 
@@ -23,6 +25,7 @@ def run_notification(notification: Notification, deliver_fn=None) -> Notificatio
     except Exception:
         notification.status = NotificationStatus.FAILED
         return notification
+
 
 def run_scheduled_jobs(notifications: list[Notification], deliver_fn=None) -> list[Notification]:
     """Run a batch of notification jobs, delivering each with retry/backoff.

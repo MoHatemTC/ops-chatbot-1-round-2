@@ -1,4 +1,5 @@
 """Database model for storing sent/skipped notifications, enforcing dedup_key uniqueness."""
+
 from sqlmodel import Field
 from app.models.base import BaseModel
 from app.schemas.notification import NotificationType, NotificationStatus
@@ -18,6 +19,7 @@ class NotificationRecord(BaseModel, table=True):
         metadata_json: Arbitrary extra data, JSON-encoded.
         created_at: Inherited from BaseModel.
     """
+
     id: int = Field(default=None, primary_key=True)
     dedup_key: str = Field(unique=True, index=True)
     recipient_id: str
