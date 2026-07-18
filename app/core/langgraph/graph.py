@@ -6,6 +6,7 @@ from typing import (
     AsyncGenerator,
     Optional,
     cast,
+    TypedDict,
 )
 from urllib.parse import quote_plus
 
@@ -62,6 +63,9 @@ from app.utils import (
 
 PostgresConnPool = AsyncConnectionPool[AsyncConnection[DictRow]]
 
+class GraphState(TypedDict, total=False):
+    messages: list[Any]
+    long_term_memory: str
 
 class LangGraphAgent:
     """Manages the LangGraph Agent/workflow and interactions with the LLM.
@@ -217,7 +221,7 @@ class LangGraphAgent:
         if self._graph is None:
             try:
                 # Fallback schema validation type checking bypass via general dict representation
-                graph_builder = StateGraph(dict)
+                graph_builder = StateGraph(GraphState)
                 graph_builder.add_node("chat", self._chat, destinations=("tool_call", END))
                 graph_builder.add_node(
                     "tool_call",
