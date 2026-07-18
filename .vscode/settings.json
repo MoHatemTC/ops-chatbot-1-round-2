@@ -1,6 +1,6 @@
 {
     "editor.formatOnSave": true,
-    "python.defaultInterpreterPath": "${workspaceFolder}/venv/bin/python",
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
     "isort.args": [
         "--settings-path=${workspaceFolder}/pyproject.toml"
     ],
@@ -26,16 +26,7 @@
     "python.analysis.indexing": true,
     "python.languageServer": "None",
     "python.analysis.completeFunctionParens": true,
-    "editor.rulers": [
-        {
-            "column": 99,
-            "color": "#FFFFFF"
-        },
-        {
-            "column": 119,
-            "color": "#90EE90"
-        }
-    ],
+    "editor.rulers": [],
     "python.testing.pytestArgs": [
         "tests"
     ],
