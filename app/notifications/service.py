@@ -1,4 +1,5 @@
 """Idempotent notification delivery service — prevents duplicate sends by dedup_key."""
+
 import json
 from typing import Optional
 
@@ -18,11 +19,7 @@ def is_duplicate(session, dedup_key: str) -> bool:
 
 def get_existing_record(session, dedup_key: str) -> Optional[NotificationRecord]:
     """Return the existing NotificationRecord for this dedup_key, if any."""
-    return session.exec(
-        select(NotificationRecord).where(
-            NotificationRecord.dedup_key == dedup_key
-        )
-    ).first()
+    return session.exec(select(NotificationRecord).where(NotificationRecord.dedup_key == dedup_key)).first()
 
 
 def send_notification(notification: Notification, deliver_action=None) -> Notification:

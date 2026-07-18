@@ -246,6 +246,7 @@ def test_refuses_when_no_relevant_sources(monkeypatch: pytest.MonkeyPatch) -> No
 
 def test_refuses_when_model_reports_insufficient_context(monkeypatch: pytest.MonkeyPatch) -> None:
     """The model's insufficient-context result becomes the approved refusal."""
+
     async def fake_retrieve(*_: Any, **__: Any) -> list[RetrievedChunk]:
         return [_chunk()]
 
@@ -270,6 +271,7 @@ def test_refuses_when_model_reports_insufficient_context(monkeypatch: pytest.Mon
 
 def test_refuses_invented_citation(monkeypatch: pytest.MonkeyPatch) -> None:
     """A syntactically valid but unretrieved citation is rejected."""
+
     async def fake_retrieve(*_: Any, **__: Any) -> list[RetrievedChunk]:
         return [_chunk()]
 
@@ -298,6 +300,7 @@ def test_refuses_invented_citation(monkeypatch: pytest.MonkeyPatch) -> None:
 
 def test_refuses_malformed_model_output(monkeypatch: pytest.MonkeyPatch) -> None:
     """An unexpected LLM return type fails closed instead of leaking an answer."""
+
     async def fake_retrieve(*_: Any, **__: Any) -> list[RetrievedChunk]:
         return [_chunk()]
 
@@ -325,6 +328,7 @@ def test_refuses_malformed_model_output(monkeypatch: pytest.MonkeyPatch) -> None
 
 def test_retrieval_failure_returns_controlled_refusal(monkeypatch: pytest.MonkeyPatch) -> None:
     """A retrieval exception becomes a safe learner-facing response."""
+
     async def fake_retrieve(*_: Any, **__: Any) -> list[RetrievedChunk]:
         raise RuntimeError("database unavailable")
 
@@ -345,6 +349,7 @@ def test_retrieval_failure_returns_controlled_refusal(monkeypatch: pytest.Monkey
 
 def test_llm_failure_returns_controlled_refusal(monkeypatch: pytest.MonkeyPatch) -> None:
     """An LLM failure does not expose internal errors or fabricate an answer."""
+
     async def fake_retrieve(*_: Any, **__: Any) -> list[RetrievedChunk]:
         return [_chunk()]
 
