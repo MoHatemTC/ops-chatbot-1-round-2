@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """Public schema exports for the application package.
 
 This module keeps imports lazy so consumers can load a single schema module
@@ -36,3 +37,5 @@ def __getattr__(name: str):
     value = getattr(module, name)
     globals()[name] = value
     return value
+=======
+>>>>>>> main

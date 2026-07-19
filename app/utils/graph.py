@@ -1,6 +1,7 @@
 """This file contains the graph utilities for the application."""
 
 import tiktoken
+from typing import Any, Union, cast
 from langchain_core.messages import BaseMessage
 from langchain_core.messages import trim_messages as _trim_messages
 
@@ -15,7 +16,7 @@ except KeyError:
     _TIKTOKEN_ENCODING = tiktoken.get_encoding("cl100k_base")
 
 
-def _count_tokens_tiktoken(messages: list) -> int:
+def _count_tokens_tiktoken(messages: list[Any]) -> int:
     """Count tokens locally using tiktoken — no API call needed."""
     num_tokens = 0
     for message in messages:
@@ -34,12 +35,14 @@ def _count_tokens_tiktoken(messages: list) -> int:
                     if isinstance(block, str):
                         num_tokens += len(_TIKTOKEN_ENCODING.encode(block))
                     elif isinstance(block, dict) and "text" in block:
-                        num_tokens += len(_TIKTOKEN_ENCODING.encode(block["text"]))
+                        val = block["text"]
+                        if isinstance(val, str):
+                            num_tokens += len(_TIKTOKEN_ENCODING.encode(val))
     num_tokens += 2  # every reply is primed with assistant
     return num_tokens
 
 
-def dump_messages(messages: list[Message]) -> list[dict]:
+def dump_messages(messages: list[Message]) -> list[dict[str, Any]]:
     """Dump the messages to a list of dictionaries.
 
     Args:
@@ -51,7 +54,7 @@ def dump_messages(messages: list[Message]) -> list[dict]:
     return [message.model_dump() for message in messages]
 
 
-def extract_text_content(content: str | list) -> str:
+def extract_text_content(content: Union[str, list[Any]]) -> str:
     """Extract plain text from an LLM content value.
 
     Handles both the simple string format and the structured block list returned
@@ -73,7 +76,7 @@ def extract_text_content(content: str | list) -> str:
             parts.append(block)
         elif isinstance(block, dict):
             if block.get("type") == "text":
-                parts.append(block.get("text", ""))
+                parts.append(str(block.get("text", "")))
             elif block.get("type") == "reasoning":
                 logger.debug(
                     "reasoning_block_received",
@@ -84,7 +87,7 @@ def extract_text_content(content: str | list) -> str:
 
 
 def process_llm_response(response: BaseMessage) -> BaseMessage:
-    """Normalise a raw LLM response so that ``response.content`` is always a plain string, regardless of the provider's content format.
+    """Normalise a raw LLM response so that ``response.content`` is always a plain string.
 
     Args:
         response: The raw response from the LLM.
@@ -93,11 +96,12 @@ def process_llm_response(response: BaseMessage) -> BaseMessage:
         The same BaseMessage instance with ``content`` set to a plain string.
     """
     if isinstance(response.content, list):
-        response.content = extract_text_content(response.content)
+        extracted_text = extract_text_content(response.content)
+        response.content = extracted_text
         logger.debug(
             "processed_structured_content",
-            content_block_count=len(response.content),
-            extracted_length=len(response.content),
+            content_block_count=len(extracted_text),
+            extracted_length=len(extracted_text),
         )
     return response
 
@@ -113,7 +117,9 @@ def prepare_messages(messages: list[Message], system_prompt: str) -> list[Messag
         list[Message]: The prepared messages.
     """
     try:
-        trimmed_messages = _trim_messages(
+        # LangChain's trim_messages expects BaseMessage or dicts and returns a list of the same type.
+        # We explicitly cast the output to list[dict] to match the input format we pass in.
+        raw_trimmed = _trim_messages(
             dump_messages(messages),
             strategy="last",
             token_counter=_count_tokens_tiktoken,
@@ -122,6 +128,8 @@ def prepare_messages(messages: list[Message], system_prompt: str) -> list[Messag
             include_system=False,
             allow_partial=False,
         )
+        trimmed_dicts = cast(list[dict[str, Any]], raw_trimmed)
+        trimmed_messages = [Message(**msg) for msg in trimmed_dicts]
     except ValueError as e:
         # Handle unrecognized content blocks (e.g., reasoning blocks from GPT-5)
         if "Unrecognized content block type" in str(e):
