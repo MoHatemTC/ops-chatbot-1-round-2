@@ -63,9 +63,11 @@ from app.utils import (
 
 PostgresConnPool = AsyncConnectionPool[AsyncConnection[DictRow]]
 
+
 class GraphState(TypedDict, total=False):
     messages: list[Any]
     long_term_memory: str
+
 
 class LangGraphAgent:
     """Manages the LangGraph Agent/workflow and interactions with the LLM.

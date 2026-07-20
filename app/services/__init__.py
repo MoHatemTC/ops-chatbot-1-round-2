@@ -5,7 +5,6 @@ Keep imports lazy so lightweight services can be imported in isolation.
 
 from importlib import import_module
 
-
 _EXPORTS = {
     "database_service": "app.services.database",
     "LLMRegistry": "app.services.llm",

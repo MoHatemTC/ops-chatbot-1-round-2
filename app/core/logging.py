@@ -16,9 +16,11 @@ from typing import Any, Dict, List, Optional
 try:
     from typing import override
 except ImportError:
+
     def override(method: Any) -> Any:
         """Compatibility fallback for Python versions before 3.12."""
         return method
+
 
 import structlog
 from asgi_correlation_id import correlation_id
