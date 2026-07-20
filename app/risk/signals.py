@@ -3,19 +3,22 @@ from typing import List, Optional
 from pydantic import BaseModel, ConfigDict
 from app.schemas.progress import LearnerProgress
 
+
 class RiskIndicator(str, Enum):
     MISSED_DEADLINES = "missed_deadlines"
     INACTIVITY = "inactivity"
     LOW_PROGRESS = "low_progress"
     LOW_FEEDBACK = "low_feedback"
 
+
 class RiskThresholds(BaseModel):
     model_config = ConfigDict(frozen=True)
-    
+
     max_missed_deadlines: int = 2
     max_inactive_days: int = 7
     min_progress_ratio: float = 0.25
     min_feedback_rating: float = 2.5
+
 
 class AtRiskSignal(BaseModel):
     learner_id: str
@@ -26,6 +29,7 @@ class AtRiskSignal(BaseModel):
     @property
     def indicators(self) -> List[RiskIndicator]:
         return self.triggered_indicators
+
 
 def compute_signal(progress: LearnerProgress, thresholds: Optional[RiskThresholds] = None) -> AtRiskSignal:
     t = thresholds or RiskThresholds()
@@ -48,9 +52,11 @@ def compute_signal(progress: LearnerProgress, thresholds: Optional[RiskThreshold
         learner_id=progress.learner_id,
         cohort_id=progress.cohort_id,
         triggered_indicators=indicators,
-        is_at_risk=len(indicators) > 0
+        is_at_risk=len(indicators) > 0,
     )
 
-def compute_signals(progress_list: List[LearnerProgress], thresholds: Optional[RiskThresholds] = None) -> List[AtRiskSignal]:
-    return [compute_signal(p, thresholds) for p in progress_list]
 
+def compute_signals(
+    progress_list: List[LearnerProgress], thresholds: Optional[RiskThresholds] = None
+) -> List[AtRiskSignal]:
+    return [compute_signal(p, thresholds) for p in progress_list]

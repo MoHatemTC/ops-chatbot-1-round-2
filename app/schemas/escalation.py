@@ -1,4 +1,5 @@
 """Schemas for escalation tickets and conversation handoff summaries."""
+
 from enum import Enum
 from pydantic import BaseModel, ConfigDict, Field
 
