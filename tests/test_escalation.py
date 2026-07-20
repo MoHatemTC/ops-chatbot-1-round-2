@@ -194,7 +194,9 @@ def test_trigger_answering_escalation_builds_valid_request(monkeypatch: pytest.M
         captured_request = request
         return EscalationTriggerResult(triggered=True, status=request.ticket.status, ticket_id="esc_123")
 
-    monkeypatch.setattr(escalation_service, "escalation_trigger", AsyncMock(trigger=AsyncMock(side_effect=fake_trigger)))
+    monkeypatch.setattr(
+        escalation_service, "escalation_trigger", AsyncMock(trigger=AsyncMock(side_effect=fake_trigger))
+    )
 
     result = asyncio.run(
         escalation_service.trigger_answering_escalation(
@@ -230,7 +232,9 @@ def test_trigger_proactive_escalation_uses_proactive_source(monkeypatch: pytest.
         captured_request = request
         return EscalationTriggerResult(triggered=True, status=request.ticket.status)
 
-    monkeypatch.setattr(escalation_service, "escalation_trigger", AsyncMock(trigger=AsyncMock(side_effect=fake_trigger)))
+    monkeypatch.setattr(
+        escalation_service, "escalation_trigger", AsyncMock(trigger=AsyncMock(side_effect=fake_trigger))
+    )
 
     result = asyncio.run(
         escalation_service.trigger_proactive_escalation(

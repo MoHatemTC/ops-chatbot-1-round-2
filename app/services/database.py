@@ -115,21 +115,29 @@ class DatabaseService:
             return user
 
     async def delete_user_by_email(self, email: str) -> bool:
-        """Delete a user by email.
-
-        Args:
-            email: The email of the user to delete
-
-        Returns:
-            bool: True if deletion was successful, False if user not found
-        """
+        """Delete a user by email."""
         with Session(self.engine) as session:
             user = session.exec(select(User).where(User.email == email)).first()
+
             if not user:
                 return False
 
+            # Delete escalation tickets
+            tickets = session.exec(select(EscalationTicket).where(EscalationTicket.user_id == str(user.id))).all()
+
+            for ticket in tickets:
+                session.delete(ticket)
+
+            # Delete sessions
+            user_sessions = session.exec(select(ChatSession).where(ChatSession.user_id == user.id)).all()
+
+            for chat_session in user_sessions:
+                session.delete(chat_session)
+
+            # Delete user
             session.delete(user)
             session.commit()
+
             logger.info("user_deleted", email=email)
             return True
 
