@@ -2,7 +2,6 @@
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 
-
 from app.api.v1.auth import get_current_user
 from app.core.config import settings
 from app.core.limiter import limiter
@@ -32,16 +31,31 @@ async def reingest_materials(
         user: The authenticated user performing the ingestion.
 
     Returns:
-        IngestionStats: counts of sources seen/ingested/skipped and chunks written.
+        IngestionStats: Counts of sources seen/ingested/skipped and chunks written.
     """
     try:
         store = build_default_store()
         stats = store.ingest(materials)
-        logger.info("kb_reingest_completed", user_id=user.id, sources_seen=stats.sources_seen)
+
+        logger.info(
+            "kb_reingest_completed",
+            user_id=user.id,
+            sources_seen=stats.sources_seen,
+        )
+
         return stats
+
     except Exception as e:
-        logger.exception("kb_reingest_failed", user_id=user.id, error=str(e))
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.exception(
+            "kb_reingest_failed",
+            user_id=user.id,
+            error=str(e),
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail=str(e),
+        )
 
 
 @router.get("/materials")
@@ -50,23 +64,26 @@ async def list_materials(
     request: Request,
     user: User = Depends(get_current_user),
 ):
-    """List ingested knowledge base materials.
+    """List all knowledge base materials.
 
-    Temporary stub.
-
-    KBStore currently exposes only ``ingest()``. Document listing is not yet
-    supported by the underlying storage layer, so this endpoint returns mock
-    data until metadata retrieval is implemented.
+    This endpoint is intentionally left unimplemented until the KBStore
+    interface exposes a public list_materials() method.
     """
-    logger.info("kb_list_materials_stub_called", user_id=user.id)
+    logger.warning(
+        "kb_list_not_implemented",
+        user_id=user.id,
+    )
 
-    return {
-        "materials": [],
-        "message": ("Document listing is not yet supported by KBStore. This endpoint is currently a stub."),
-    }
+    raise HTTPException(
+        status_code=501,
+        detail=(
+            "Listing KB materials is not implemented. "
+            "The current KBStore interface does not support this operation."
+        ),
+    )
 
 
-@router.post("/materials/{material_id}/retire")
+@router.post("/retire/{material_id}")
 @limiter.limit(settings.RATE_LIMIT_ENDPOINTS["kb_admin"][0])
 async def retire_material(
     request: Request,
@@ -75,20 +92,19 @@ async def retire_material(
 ):
     """Retire a knowledge base material.
 
-    Temporary stub.
-
-    KBStore currently exposes only ``ingest()``. Material retirement is not yet
-    supported by the storage layer, so this endpoint returns a placeholder
-    response until deletion support is available.
+    This endpoint is intentionally left unimplemented until the KBStore
+    interface exposes a public retire_material() method.
     """
-    logger.info(
-        "kb_retire_material_stub_called",
+    logger.warning(
+        "kb_retire_not_implemented",
         user_id=user.id,
         material_id=material_id,
     )
 
-    return {
-        "material_id": material_id,
-        "status": "stub",
-        "message": ("Material retirement is not yet supported by KBStore. This endpoint is currently a stub."),
-    }
+    raise HTTPException(
+        status_code=501,
+        detail=(
+            "Retiring KB materials is not implemented. "
+            "The current KBStore interface does not support this operation."
+        ),
+    )
