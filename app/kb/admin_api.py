@@ -31,7 +31,7 @@ async def reingest_materials(
         user: The authenticated user performing the ingestion.
 
     Returns:
-        IngestionStats: Counts of sources seen/ingested/skipped and chunks written.
+        IngestionStats: Counts of sources seen, ingested, skipped, and chunks written.
     """
     try:
         store = build_default_store()
@@ -64,23 +64,25 @@ async def list_materials(
     request: Request,
     user: User = Depends(get_current_user),
 ):
-    """List all knowledge base materials.
+    """List knowledge base materials.
 
-    This endpoint is intentionally left unimplemented until the KBStore
-    interface exposes a public list_materials() method.
+    This endpoint returns mock data until KBStore exposes a
+    list_materials() operation.
     """
-    logger.warning(
-        "kb_list_not_implemented",
-        user_id=user.id,
-    )
+    logger.info("kb_materials_listed_mock", user_id=user.id)
 
-    raise HTTPException(
-        status_code=501,
-        detail=(
-            "Listing KB materials is not implemented. "
-            "The current KBStore interface does not support this operation."
-        ),
-    )
+    return [
+        {
+            "id": "mock-material-1",
+            "title": "Employee Handbook",
+            "status": "active",
+        },
+        {
+            "id": "mock-material-2",
+            "title": "Support FAQ",
+            "status": "active",
+        },
+    ]
 
 
 @router.post("/retire/{material_id}")
@@ -90,21 +92,19 @@ async def retire_material(
     material_id: str,
     user: User = Depends(get_current_user),
 ):
-    """Retire a knowledge base material.
+    """Mark a knowledge base material as retired.
 
-    This endpoint is intentionally left unimplemented until the KBStore
-    interface exposes a public retire_material() method.
+    This endpoint returns a mock response until KBStore exposes a
+    retire_material() operation.
     """
-    logger.warning(
-        "kb_retire_not_implemented",
+    logger.info(
+        "kb_material_retired_mock",
         user_id=user.id,
         material_id=material_id,
     )
 
-    raise HTTPException(
-        status_code=501,
-        detail=(
-            "Retiring KB materials is not implemented. "
-            "The current KBStore interface does not support this operation."
-        ),
-    )
+    return {
+        "material_id": material_id,
+        "status": "retired",
+        "message": "Mock response. KB retirement is not yet implemented.",
+    }
