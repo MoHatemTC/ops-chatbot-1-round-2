@@ -37,6 +37,28 @@ class LearnerProgress(BaseModel):
     something we can compute from platform data (tasks, sessions,
     feedback) without any inference or LLM involvement, so the risk
     detector stays deterministic and auditable.
+
+    Attributes:
+        learner_id: Unique identifier of the learner.
+        cohort_id: Cohort the learner belongs to.
+        as_of: UTC timestamp this snapshot was computed at. Defaults to now.
+        total_tasks: Total tasks assigned to the learner so far. Must be >= 0.
+        completed_tasks: Tasks the learner has completed. Must be >= 0 and
+            cannot exceed total_tasks.
+        missed_deadlines: Count of task/project deadlines missed to date.
+            Must be >= 0. Defaults to 0.
+        last_active_at: UTC timestamp of the learner's last recorded
+            activity, if any. None means the learner has never been active.
+        recent_feedback: Feedback entries submitted by the learner, most
+            relevant window only (callers are expected to pre-filter to a
+            relevant lookback period). Empty means no feedback left yet --
+            this is treated as "no signal," not as negative feedback.
+
+    In addition to the stored fields above, three computed properties
+    derive the signal-ready view of this snapshot without duplicating data:
+    progress_ratio (completed_tasks / total_tasks, in [0, 1]), days_inactive
+    (days since last_active_at, or None if never active), and
+    average_feedback_score (mean of recent_feedback scores, or None if empty).
     """
 
     learner_id: str = Field(..., description="Unique identifier of the learner.")
