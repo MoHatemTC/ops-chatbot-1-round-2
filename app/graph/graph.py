@@ -6,6 +6,8 @@ from langchain_core.messages import AIMessage
 from langchain_core.runnables.config import RunnableConfig
 from langgraph.graph import END, StateGraph
 
+from app.core.metrics import session_ticket_links_total
+from app.core.observability import append_langfuse_tags
 from app.graph.nodes.answer import grounded_answer
 from app.graph.nodes.router import route_after_router, router_node
 from app.graph.state import SessionGraphState
@@ -21,6 +23,11 @@ async def retrieve_node(
     This does not replace the retrieval subsystem. It marks that retrieval-phase
     preprocessing has occurred and preserves the graph shape required by the task.
     """
+    if config:
+        metadata = config.get("metadata")
+        if isinstance(metadata, dict):
+            append_langfuse_tags(metadata, "phase1-routing", "node:retrieve")
+
     return {
         "retrieved": True,
     }
@@ -31,6 +38,11 @@ async def answer_node(
     config: RunnableConfig | None = None,
 ) -> dict[str, Any]:
     """Run the grounded answer node and project its escalation signal into graph state."""
+    if config:
+        metadata = config.get("metadata")
+        if isinstance(metadata, dict):
+            append_langfuse_tags(metadata, "phase1-routing", "node:answer")
+
     result = await grounded_answer(state, config)
 
     answer_signal = False
@@ -61,6 +73,16 @@ async def escalate_node(
     if state.escalation_context is None:
         return {}
 
+    if config:
+        metadata = config.get("metadata")
+        if isinstance(metadata, dict):
+            append_langfuse_tags(
+                metadata,
+                "phase1-routing",
+                "node:escalate",
+                f"reason:{state.escalation_context.trigger_reason}",
+            )
+
     result = await trigger_answering_escalation(
         reason=state.escalation_context.trigger_reason,
         problem=state.escalation_context.problem,
@@ -76,13 +98,15 @@ async def escalate_node(
         user_id=state.user_id,
     )
 
+    session_ticket_links_total.labels(status="linked" if result.ticket_id else "missing_ticket_id").inc()
+
     return {
         "ticket_id": result.ticket_id,
         "route_decision": "escalate",
     }
 
 
-def build_phase1_graph():
+def build_phase1_graph(*, checkpointer: Any | None = None):
     """Build the Week 2 Phase 1 orchestration graph."""
     graph = StateGraph(SessionGraphState)
 
@@ -104,4 +128,4 @@ def build_phase1_graph():
     )
     graph.add_edge("escalate", END)
 
-    return graph.compile()
+    return graph.compile(checkpointer=checkpointer)

@@ -2,7 +2,11 @@
 
 from difflib import SequenceMatcher
 from typing import Any, Mapping
-from langchain_core.messages import AIMessage
+
+from langchain_core.runnables.config import RunnableConfig
+
+from app.core.metrics import escalation_routing_total
+from app.core.observability import append_langfuse_tags
 from app.graph.state import EscalationContext, SessionGraphState
 
 
@@ -136,7 +140,10 @@ def route_turn(state: SessionGraphState) -> str:
     return "end"
 
 
-def router_node(state: SessionGraphState) -> dict[str, Any]:
+def router_node(
+    state: SessionGraphState,
+    config: RunnableConfig | None = None,
+) -> dict[str, Any]:
     """Router node that stores trigger flags and route decision in state."""
     explicit_human_requested = detect_explicit_human_request(state)
     frustration_detected = detect_frustration(state)
@@ -145,6 +152,29 @@ def router_node(state: SessionGraphState) -> dict[str, Any]:
 
     escalation_needed = explicit_human_requested or frustration_detected or repeated_failures or answer_signal
     route_decision = "escalate" if escalation_needed else "end"
+    trigger = (
+        "explicit_human_request"
+        if explicit_human_requested
+        else "frustration"
+        if frustration_detected
+        else "repeated_failed_turns"
+        if repeated_failures
+        else "answer_signal"
+        if answer_signal
+        else "none"
+    )
+
+    if config:
+        metadata = config.get("metadata")
+        if isinstance(metadata, dict):
+            append_langfuse_tags(
+                metadata,
+                "phase1-routing",
+                f"route:{route_decision}",
+                f"trigger:{trigger}",
+            )
+
+    escalation_routing_total.labels(route=route_decision, trigger=trigger).inc()
 
     update: dict[str, Any] = {
         "explicit_human_requested": explicit_human_requested,

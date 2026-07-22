@@ -4,7 +4,12 @@ This module sets up and configures Prometheus metrics for monitoring the applica
 """
 
 from prometheus_client import Counter, Histogram, Gauge
-from starlette_prometheus import metrics, PrometheusMiddleware
+
+try:
+    from starlette_prometheus import metrics, PrometheusMiddleware
+except ModuleNotFoundError:
+    metrics = None
+    PrometheusMiddleware = None
 
 # Request metrics
 http_requests_total = Counter("http_requests_total", "Total number of HTTP requests", ["method", "endpoint", "status"])
@@ -40,6 +45,18 @@ session_names_generated_total = Counter(
     ["status"],  # "success" | "error"
 )
 
+escalation_routing_total = Counter(
+    "escalation_routing_total",
+    "Total routing decisions made by the Week 2 escalation router",
+    ["route", "trigger"],
+)
+
+session_ticket_links_total = Counter(
+    "session_ticket_links_total",
+    "Total session-to-ticket links written by the escalation flow",
+    ["status"],
+)
+
 
 def setup_metrics(app):
     """Set up Prometheus metrics middleware and endpoints.
@@ -47,6 +64,9 @@ def setup_metrics(app):
     Args:
         app: FastAPI application instance
     """
+    if PrometheusMiddleware is None or metrics is None:
+        return
+
     # Add Prometheus middleware
     app.add_middleware(PrometheusMiddleware)
 
