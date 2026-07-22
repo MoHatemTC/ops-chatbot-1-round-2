@@ -76,9 +76,6 @@ _CONTEXT_LIMIT = 1200
 _NEXT_STEP_LIMIT = 800
 _SUMMARY_LIMIT = 800
 _USER_GOAL_LIMIT = 400
-
-# Two failures are the minimum that can truthfully be called "repeated". The
-# eight-message window avoids treating old, unrelated failures as the same issue.
 _REPEATED_FAILURE_THRESHOLD = 2
 _RECENT_MESSAGE_WINDOW = 8
 
