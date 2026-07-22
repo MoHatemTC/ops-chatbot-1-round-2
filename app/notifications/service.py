@@ -1,14 +1,17 @@
-"""Idempotent notification delivery service — prevents duplicate sends by dedup_key."""
+"""Ops ticket notification delivery service with idempotency and retry mechanics."""
 
 import json
-from typing import Optional
-
+import logging
+from typing import Callable, Optional
 from sqlmodel import select
 from sqlalchemy.exc import IntegrityError
 
 from app.services.database import DatabaseService
 from app.models.notification import NotificationRecord
 from app.schemas.notification import Notification, NotificationStatus
+from app.notifications.channels import BaseNotificationChannel, OpsSlackChannel
+
+logger = logging.getLogger(__name__)
 
 
 def is_duplicate(session, dedup_key: str) -> bool:
@@ -22,7 +25,10 @@ def get_existing_record(session, dedup_key: str) -> Optional[NotificationRecord]
     return session.exec(select(NotificationRecord).where(NotificationRecord.dedup_key == dedup_key)).first()
 
 
-def send_notification(notification: Notification, deliver_action=None) -> Notification:
+def send_notification(
+    notification: Notification,
+    deliver_action: Optional[Callable[[Notification], None]] = None,
+) -> Notification:
     """Try to send a notification, reserving the dedup_key before delivery.
 
     Reserves the dedup_key by inserting a PENDING record first. If a record
@@ -69,7 +75,13 @@ def send_notification(notification: Notification, deliver_action=None) -> Notifi
             return notification
 
         if deliver_action is not None:
-            deliver_action(notification)  # if this raises, propagate — tenacity needs to see it
+            try:
+                deliver_action(notification)
+            except Exception as exc:
+                record.status = NotificationStatus.FAILED
+                session.add(record)
+                session.commit()
+                raise exc
 
         notification.status = NotificationStatus.SENT
         record.status = NotificationStatus.SENT
@@ -78,3 +90,25 @@ def send_notification(notification: Notification, deliver_action=None) -> Notifi
         session.refresh(record)
 
         return notification
+
+
+class OpsNotificationService:
+    """End-to-end Notification Delivery Service for Ops team tickets."""
+
+    def __init__(self, channel: Optional[BaseNotificationChannel] = None) -> None:
+        """Initialize OpsNotificationService with a specific delivery channel."""
+        self.channel = channel or OpsSlackChannel()
+
+    def notify_new_ticket(self, notification: Notification) -> Notification:
+        """Deliver a 'new ticket' notification using the idempotent delivery mechanism."""
+
+        def action(notif: Notification) -> None:
+            payload = {
+                "ticket_id": notif.payload.metadata.get("ticket_id"),
+                "title": notif.payload.title,
+                "body": notif.payload.body,
+                "force_fail": notif.payload.metadata.get("force_fail", False),
+            }
+            self.channel.send(payload)
+
+        return send_notification(notification, deliver_action=action)
