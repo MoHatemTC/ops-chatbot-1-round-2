@@ -3,16 +3,21 @@
 from unittest.mock import MagicMock
 import pytest
 from app.notifications.service import OpsNotificationService
-from app.schemas.notification import Notification, NotificationPayload, NotificationStatus
+from app.schemas.notification import (
+    Notification,
+    NotificationPayload,
+    NotificationStatus,
+    NotificationType,
+)
 
 
 @pytest.fixture
 def sample_notification():
-    """Return a sample Ops notification fixture."""
+    """Return a sample Ops notification fixture using official Enum member."""
     return Notification(
         dedup_key="ops_ticket_TCK-9999",
         recipient_id="ops_team",
-        type="at_risk_nudge",  # تم التغيير للقيمة المقبولة في الـ Enum
+        type=NotificationType.AT_RISK_NUDGE,  # تمرير الـ Enum الصحيح لمنع خطأ Pyright
         payload=NotificationPayload(
             title="New Escalation Ticket Created",
             body="High latency detected in authentication service",
