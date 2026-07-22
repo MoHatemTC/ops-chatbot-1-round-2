@@ -11,13 +11,16 @@ import sys
 from contextvars import ContextVar
 from datetime import datetime
 from pathlib import Path
-from typing import (
-    Any,
-    Dict,
-    List,
-    Optional,
-    override,
-)
+from typing import Any, Dict, List, Optional
+
+try:
+    from typing import override
+except ImportError:
+
+    def override(method: Any) -> Any:
+        """Compatibility fallback for Python versions before 3.12."""
+        return method
+
 
 import structlog
 from asgi_correlation_id import correlation_id
@@ -210,7 +213,8 @@ def setup_logging() -> None:
     # Get shared processors
     shared_processors = get_structlog_processors(
         # Include detailed file info only in development and test
-        include_file_info=settings.ENVIRONMENT in [Environment.DEVELOPMENT, Environment.TEST]
+        include_file_info=settings.ENVIRONMENT
+        in [Environment.DEVELOPMENT, Environment.TEST]
     )
 
     # Configure standard logging
