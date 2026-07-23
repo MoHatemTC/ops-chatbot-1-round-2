@@ -2,8 +2,13 @@
 
 import asyncio
 from datetime import datetime, timedelta, timezone
+from app.api.v1.auth import get_current_user
+from app.models.user import User
 
 import pytest
+from fastapi.testclient import TestClient
+from app.main import app
+
 
 from app.dashboards.metrics import (
     get_escalation_rate,
@@ -18,8 +23,16 @@ from app.observability.kpis import (
 )
 from app.services.database import DatabaseService
 
+client = TestClient(app)
+
 db_service = DatabaseService()
 TEST_EMAIL = "opsconsole_test@example.com"
+
+fake_user = User(
+    id=1,
+    username="tester",
+    email="tester@example.com",
+)
 
 
 @pytest.fixture(autouse=True)
@@ -129,3 +142,62 @@ def test_update_support_metrics_sets_kpis(sample_data):
     assert after >= before
     assert kpi_escalation_rate._value.get() == pytest.approx(metrics["escalation_rate"])
 
+
+def test_dashboard_metrics_requires_auth():
+    """Dashboard endpoint should reject unauthenticated requests."""
+    response = client.get("/api/v1/dashboards/metrics")
+
+    assert response.status_code == 403
+
+
+def test_kb_reingest_requires_auth():
+    """KB re-ingest endpoint should reject unauthenticated requests."""
+    response = client.post(
+        "/api/v1/kb/reingest",
+        json=[],
+    )
+
+    assert response.status_code == 403
+
+
+def test_kb_list_materials_requires_auth():
+    """KB materials endpoint should reject unauthenticated requests."""
+    response = client.get("/api/v1/kb/materials")
+
+    assert response.status_code == 403
+
+
+def test_kb_retire_requires_auth():
+    """KB retire endpoint should reject unauthenticated requests."""
+    response = client.post("/api/v1/kb/retire/mock-material-1")
+
+    assert response.status_code == 403
+
+
+def test_dashboard_metrics_rate_limit():
+    """Dashboard endpoint should eventually return 429."""
+    app.dependency_overrides[get_current_user] = lambda: fake_user
+
+    try:
+        for _ in range(31):  # dashboard limit is 30/min
+            response = client.get("/api/v1/dashboards/metrics")
+
+        assert response.status_code == 429
+    finally:
+        app.dependency_overrides.clear()
+
+
+def test_kb_reingest_rate_limit():
+    """KB re-ingest endpoint should eventually return 429."""
+    app.dependency_overrides[get_current_user] = lambda: fake_user
+
+    try:
+        for _ in range(21):  # kb_admin limit is 20/min
+            response = client.post(
+                "/api/v1/kb/reingest",
+                json=[],
+            )
+
+        assert response.status_code == 429
+    finally:
+        app.dependency_overrides.clear()

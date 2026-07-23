@@ -5,7 +5,7 @@ endpoints like authentication and chatbot functionality.
 """
 
 from fastapi import APIRouter
-from app.api.v1.kb_admin import router as kb_admin_router
+from app.kb.admin_api import router as kb_admin_router
 from app.api.dashboards import router as dashboards_router
 from app.api.v1.auth import router as auth_router
 from app.api.v1.chatbot import router as chatbot_router
