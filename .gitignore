@@ -6,7 +6,8 @@ dist/
 wheels/
 *.egg-info
 *.jsonl
-
+.pytest_cache
+.vscode
 # Virtual environments
 .venv
 

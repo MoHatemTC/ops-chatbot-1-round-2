@@ -1,5 +1,7 @@
 """Observability module for the application."""
 
+from collections.abc import MutableMapping
+
 from langfuse import Langfuse
 from langfuse.langchain import CallbackHandler
 
@@ -38,6 +40,22 @@ def get_langfuse_callback_handler() -> CallbackHandler:
         CallbackHandler: Configured Langfuse callback handler.
     """
     return CallbackHandler()
+
+
+def append_langfuse_tags(metadata: MutableMapping[str, object] | None, *tags: str) -> None:
+    """Append Langfuse-friendly tags into runnable metadata in-place."""
+    if metadata is None:
+        return
+
+    existing = metadata.get("langfuse_tags", [])
+    normalized_existing = existing if isinstance(existing, list) else [existing]
+    merged: list[str] = [str(tag) for tag in normalized_existing if tag]
+
+    for tag in tags:
+        if tag and tag not in merged:
+            merged.append(tag)
+
+    metadata["langfuse_tags"] = merged
 
 
 langfuse_callback_handler = get_langfuse_callback_handler()
