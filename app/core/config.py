@@ -202,6 +202,8 @@ class Settings:
             "login": ["20 per minute"],
             "root": ["10 per minute"],
             "health": ["20 per minute"],
+            "dashboards": ["30 per minute"],
+            "kb_admin": ["20 per minute"],
         }
 
         # Update rate limit endpoints from environment variables
