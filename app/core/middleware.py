@@ -80,11 +80,11 @@ class MetricsMiddleware(BaseHTTPMiddleware):
 
 
 class LoggingContextMiddleware(BaseHTTPMiddleware):
-    """Middleware for adding user_id and session_id to logging context."""
+    """Middleware for adding user_id, session_id, and cohort_id to logging context."""
 
     @override
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
-        """Extract user_id and session_id from authenticated requests and add to logging context.
+        """Extract user_id, session_id, and cohort_id from authenticated requests and add to logging context.
 
         Args:
             request: The incoming request
@@ -103,17 +103,19 @@ class LoggingContextMiddleware(BaseHTTPMiddleware):
                 token = auth_header.split(" ")[1]
 
                 try:
-                    # Decode token to get session_id (stored in "sub" claim)
+                    # Decode token to get claims
                     payload = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms=[settings.JWT_ALGORITHM])
                     session_id = payload.get("sub")
+                    cohort_id = payload.get("cohort_id")
+
+                    # Attach cohort_id to request state for downstream query scoping (M10)
+                    if cohort_id:
+                        request.state.cohort_id = cohort_id
+                        bind_context(cohort_id=cohort_id)
 
                     if session_id:
                         # Bind session_id to logging context
                         bind_context(session_id=session_id)
-
-                        # Try to get user_id from request state after authentication
-                        # This will be set by the dependency injection if the endpoint uses authentication
-                        # We'll check after the request is processed
 
                 except JWTError:
                     # Token is invalid, but don't fail the request - let the auth dependency handle it
@@ -125,6 +127,9 @@ class LoggingContextMiddleware(BaseHTTPMiddleware):
             # After request processing, check if user info was added to request state
             if hasattr(request.state, "user_id"):
                 bind_context(user_id=request.state.user_id)
+
+            if hasattr(request.state, "cohort_id") and "cohort_id" not in request.state:
+                bind_context(cohort_id=request.state.cohort_id)
 
             return response
 

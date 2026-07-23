@@ -1,6 +1,7 @@
 """Prometheus metrics configuration for the application.
 
-This module sets up and configures Prometheus metrics for monitoring the application.
+This module sets up and configures Prometheus metrics for monitoring the application,
+including operational metrics (Ops KPIs) and LLM inference tracking.
 """
 
 from prometheus_client import Counter, Histogram, Gauge
@@ -11,17 +12,62 @@ except ModuleNotFoundError:
     metrics = None
     PrometheusMiddleware = None
 
-# Request metrics
-http_requests_total = Counter("http_requests_total", "Total number of HTTP requests", ["method", "endpoint", "status"])
-
-http_request_duration_seconds = Histogram(
-    "http_request_duration_seconds", "HTTP request duration in seconds", ["method", "endpoint"]
+# -----------------------------------------------------------------------------
+# Standard HTTP & Infrastructure Metrics
+# -----------------------------------------------------------------------------
+http_requests_total = Counter(
+    "http_requests_total", 
+    "Total number of HTTP requests", 
+    ["method", "endpoint", "status"]
 )
 
-# Database metrics
+http_request_duration_seconds = Histogram(
+    "http_request_duration_seconds", 
+    "HTTP request duration in seconds", 
+    ["method", "endpoint"]
+)
+
 db_connections = Gauge("db_connections", "Number of active database connections")
 
-# Custom business metrics
+
+# -----------------------------------------------------------------------------
+# M09: Ops & Support KPI Metrics
+# -----------------------------------------------------------------------------
+support_volume_total = Counter(
+    "support_volume_total",
+    "Total volume of incoming support requests and tickets",
+    ["source", "status"]  # e.g., source: internal/connector, status: received/closed
+)
+
+support_open_issues = Gauge(
+    "support_open_issues",
+    "Current count of active open support issues",
+    ["severity", "cohort_id"]
+)
+
+ticket_resolution_duration_seconds = Histogram(
+    "ticket_resolution_duration_seconds",
+    "Time taken to resolve support tickets in seconds",
+    ["category"],
+    buckets=[30.0, 60.0, 300.0, 600.0, 1800.0, 3600.0, 86400.0]
+)
+
+at_risk_trends_total = Counter(
+    "at_risk_trends_total",
+    "Total cases flagged as at-risk",
+    ["risk_type", "cohort_id"]
+)
+
+support_escalations_total = Counter(
+    "support_escalations_total",
+    "Total number of escalated support issues",
+    ["reason"]
+)
+
+
+# -----------------------------------------------------------------------------
+# LLM & Business Metrics
+# -----------------------------------------------------------------------------
 orders_processed = Counter("orders_processed_total", "Total number of orders processed")
 
 llm_inference_duration_seconds = Histogram(
@@ -30,7 +76,6 @@ llm_inference_duration_seconds = Histogram(
     ["model"],
     buckets=[0.1, 0.3, 0.5, 1.0, 2.0, 5.0],
 )
-
 
 llm_stream_duration_seconds = Histogram(
     "llm_stream_duration_seconds",
@@ -58,6 +103,9 @@ session_ticket_links_total = Counter(
 )
 
 
+# -----------------------------------------------------------------------------
+# Middleware & Setup
+# -----------------------------------------------------------------------------
 def setup_metrics(app):
     """Set up Prometheus metrics middleware and endpoints.
 
