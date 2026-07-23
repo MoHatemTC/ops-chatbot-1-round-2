@@ -2,8 +2,10 @@
 
 This module coordinates the read side of Grounded Q&A without changing the
 shared graph state or platform services. It extracts the learner's latest
-question, retrieves approved cohort-scoped evidence, asks the platform LLM for
-structured output, validates every citation, and returns either:
+question, retrieves approved cohort-scoped evidence through the full
+KB pipeline (cohort scoping → freshness filtering → confidence gating),
+asks the platform LLM for structured output, validates every citation,
+and returns either:
 
 * a grounded answer with human-readable source attribution; or
 * the approved honest-refusal message with escalation metadata.
@@ -26,16 +28,16 @@ from pydantic import (
 )
 
 from app.core.logging import logger
+from app.kb.cohort import CohortScopedRetriever, build_cohort_scoped_retriever
+from app.kb.freshness import filter_freshest, unwrap_versioned
 from app.prompts.grounding import (
     HONEST_REFUSAL_MESSAGE,
     GroundedAnswer,
     GroundingChunk,
     build_grounding_messages,
 )
-from app.retrieval.retriever import (
-    RetrievedChunk,
-    retrieve,
-)
+from app.retrieval.confidence import gate_chunks
+from app.retrieval.retriever import RetrievedChunk
 from app.schemas.graph import GraphState
 from app.services.llm import llm_service
 
@@ -44,6 +46,7 @@ EscalationReason = Literal[
     "missing_cohort",
     "no_relevant_sources",
     "retrieval_error",
+    "low_confidence",
     "insufficient_context",
     "invalid_model_output",
     "invalid_citations",
@@ -261,12 +264,21 @@ async def generate_grounded_answer(
     question: str,
     *,
     cohort: str,
+    retriever: CohortScopedRetriever | None = None,
 ) -> AnswerOutcome:
     """Retrieve evidence, generate a structured answer, and validate citations.
+
+    The full pipeline is:
+
+    1. Cohort-scoped retrieval (prevents cross-cohort leakage).
+    2. Freshness filtering (keeps only the latest version of each source).
+    3. Confidence gating (refuses honestly when evidence is weak).
+    4. LLM grounded answer with citation validation.
 
     Args:
         question: The learner's current question.
         cohort: Mandatory cohort scope for knowledge retrieval.
+        retriever: Optional injected retriever for testing.
 
     Returns:
         A grounded answer outcome or an honest refusal. No exception escapes to
@@ -279,8 +291,12 @@ async def generate_grounded_answer(
     if not normalized_cohort:
         return _refusal("missing_cohort")
 
+    # --- Step 1: Cohort-scoped retrieval ---
+    scoped_retriever = retriever or build_cohort_scoped_retriever()
     try:
-        retrieved = await retrieve(normalized_question, cohort=normalized_cohort)
+        retrieved = await scoped_retriever.retrieve(
+            normalized_question, cohort=normalized_cohort
+        )
     except Exception as exc:
         logger.exception(
             "grounded_answer_retrieval_failed",
@@ -293,6 +309,28 @@ async def generate_grounded_answer(
     if not chunks:
         logger.info("grounded_answer_no_relevant_sources", cohort=normalized_cohort)
         return _refusal("no_relevant_sources")
+
+    # --- Step 2: Freshness filtering ---
+    versioned = filter_freshest(chunks)
+    chunks = unwrap_versioned(versioned)
+    if not chunks:
+        logger.info("grounded_answer_no_fresh_sources", cohort=normalized_cohort)
+        return _refusal("no_relevant_sources")
+
+    # --- Step 3: Confidence gating ---
+    confidence_result, accepted_chunks = gate_chunks(chunks)
+    if confidence_result.needs_escalation:
+        logger.info(
+            "grounded_answer_confidence_gate_refused",
+            cohort=normalized_cohort,
+            score=round(confidence_result.score, 4),
+            threshold=confidence_result.threshold,
+            reason=confidence_result.escalation_reason,
+        )
+        return _refusal("low_confidence")
+
+    # Use the accepted chunks from the confidence gate.
+    chunks = accepted_chunks
 
     try:
         grounding_chunks = cast(Sequence[GroundingChunk], chunks)
