@@ -20,19 +20,7 @@ async def reingest_materials(
     materials: list[RawMaterial],
     user: User = Depends(get_current_user),
 ):
-    """Re-ingest a batch of approved materials into the knowledge base.
-
-    Delegates to KBStore.ingest, which is update-not-duplicate: unchanged
-    materials (matching content hash) are skipped automatically.
-
-    Args:
-        request: The FastAPI request object for rate limiting.
-        materials: The approved documents to ingest.
-        user: The authenticated user performing the ingestion.
-
-    Returns:
-        IngestionStats: Counts of sources seen, ingested, skipped, and chunks written.
-    """
+    """Re-ingest a batch of approved materials into the knowledge base."""
     try:
         store = build_default_store()
         stats = store.ingest(materials)
@@ -64,25 +52,30 @@ async def list_materials(
     request: Request,
     user: User = Depends(get_current_user),
 ):
-    """List knowledge base materials.
+    """List all materials currently in the knowledge base, with freshness info."""
+    try:
+        store = build_default_store()
+        materials = store.list_materials()
 
-    This endpoint returns mock data until KBStore exposes a
-    list_materials() operation.
-    """
-    logger.info("kb_materials_listed_mock", user_id=user.id)
+        logger.info(
+            "kb_materials_listed",
+            user_id=user.id,
+            count=len(materials),
+        )
 
-    return [
-        {
-            "id": "mock-material-1",
-            "title": "Employee Handbook",
-            "status": "active",
-        },
-        {
-            "id": "mock-material-2",
-            "title": "Support FAQ",
-            "status": "active",
-        },
-    ]
+        return {"materials": materials}
+
+    except Exception as e:
+        logger.exception(
+            "kb_list_failed",
+            user_id=user.id,
+            error=str(e),
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail=str(e),
+        )
 
 
 @router.post("/retire/{material_id}")
@@ -92,19 +85,41 @@ async def retire_material(
     material_id: str,
     user: User = Depends(get_current_user),
 ):
-    """Mark a knowledge base material as retired.
+    """Retire a material from the knowledge base."""
+    try:
+        store = build_default_store()
 
-    This endpoint returns a mock response until KBStore exposes a
-    retire_material() operation.
-    """
-    logger.info(
-        "kb_material_retired_mock",
-        user_id=user.id,
-        material_id=material_id,
-    )
+        retired = store.retire_material(material_id)
 
-    return {
-        "material_id": material_id,
-        "status": "retired",
-        "message": "Mock response. KB retirement is not yet implemented.",
-    }
+        if not retired:
+            raise HTTPException(
+                status_code=404,
+                detail=f"No material found for material_id={material_id}",
+            )
+
+        logger.info(
+            "kb_material_retired_via_api",
+            user_id=user.id,
+            material_id=material_id,
+        )
+
+        return {
+            "material_id": material_id,
+            "retired": True,
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        logger.exception(
+            "kb_retire_failed",
+            user_id=user.id,
+            material_id=material_id,
+            error=str(e),
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail=str(e),
+        )

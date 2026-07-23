@@ -227,6 +227,22 @@ class KBStore:
             chunks_written=stats.chunks_written,
         )
         return stats
+    def list_materials(self) -> list[dict]:
+        """List all materials currently in the knowledge base, with freshness info."""
+        return self._repository.list_sources()
+
+    def retire_material(self, source_id: str) -> bool:
+        """Retire a material from the knowledge base.
+
+        Args:
+            source_id: Stable identity of the material to retire.
+
+        Returns:
+            True if the material was found and retired, False if it didn't exist.
+        """
+        retired = self._repository.retire_source(source_id)
+        logger.info("kb_material_retired", source_id=source_id, retired=retired)
+        return retired
 
 
 class OpenAIEmbedder:
