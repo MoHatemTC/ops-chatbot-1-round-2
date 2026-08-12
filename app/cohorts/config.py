@@ -347,7 +347,7 @@ class CohortConfigLoader:
     # Writes
     # ------------------------------------------------------------------
 
-    """def create_cohort(
+    def create_cohort(
         self,
         *,
         name: str,
@@ -413,7 +413,6 @@ class CohortConfigLoader:
 
             logger.info("cohort_created", cohort_id=definition.cohort_id)
             return definition
-            """
 
     def update_cohort(
         self,

@@ -1,0 +1,1989 @@
+AI TRACK — COHORT RULES, POLICIES, AND LEARNER GUIDELINES
+Version: 1.0
+Track: Artificial Intelligence (AI)
+Document Type: Cohort Rules and Operations Guide
+
+===============================================================================
+1. PURPOSE OF THIS DOCUMENT
+===============================================================================
+
+This document defines the official operational rules, learner expectations,
+attendance policies, task submission requirements, communication guidelines,
+project rules, support procedures, and general conduct standards for learners
+enrolled in the Artificial Intelligence (AI) Track.
+
+All learners are expected to read these rules carefully and follow them
+throughout the cohort.
+
+The purpose of these rules is to create a fair, organized, professional, and
+productive learning environment for every learner.
+
+These rules apply to all official AI Track activities, including:
+
+- Live technical sessions.
+- Recorded learning sessions.
+- Workshops.
+- Mentoring sessions.
+- Office hours.
+- Assignments.
+- Weekly tasks.
+- Quizzes.
+- Individual projects.
+- Team projects.
+- Presentations.
+- Technical reviews.
+- Peer reviews.
+- Career activities.
+- Surveys and feedback forms.
+- Official communication channels.
+- Graduation requirements.
+
+Learners should rely on official cohort materials and announcements for
+cohort-specific dates and schedules.
+
+===============================================================================
+2. TRACK OVERVIEW
+===============================================================================
+
+The Artificial Intelligence Track is designed to help learners develop
+practical and professional skills related to Artificial Intelligence,
+Machine Learning, Data Science, Deep Learning, Natural Language Processing,
+Generative AI, software development, and deployment practices.
+
+The exact technical curriculum may vary depending on the cohort plan.
+
+Possible subjects may include:
+
+- Python programming.
+- Data analysis.
+- NumPy.
+- Pandas.
+- Data visualization.
+- Statistics.
+- Probability.
+- Data preprocessing.
+- Feature engineering.
+- Machine Learning.
+- Supervised learning.
+- Unsupervised learning.
+- Model evaluation.
+- Deep Learning.
+- Neural networks.
+- Computer Vision.
+- Natural Language Processing.
+- Large Language Models.
+- Retrieval-Augmented Generation.
+- Prompt engineering.
+- Vector databases.
+- APIs.
+- FastAPI.
+- Git and GitHub.
+- Software engineering practices.
+- MLOps.
+- Deployment.
+- Cloud services.
+- Databases.
+- Team collaboration.
+- Technical communication.
+
+The track is practical. Learners are expected to write code, solve problems,
+submit tasks, participate in projects, and demonstrate their own understanding.
+
+===============================================================================
+3. LEARNER RESPONSIBILITY
+===============================================================================
+
+Every learner is responsible for managing their own progress.
+
+Learners must:
+
+- Attend required sessions.
+- Follow the official schedule.
+- Monitor announcements.
+- Submit tasks before deadlines.
+- Review missed content.
+- Ask for help when blocked.
+- Keep their account information accurate.
+- Use official communication channels.
+- Respect mentors, instructors, staff, and other learners.
+- Protect account credentials.
+- Keep copies of important work.
+- Use version control when required.
+- Follow project and submission instructions.
+- Complete required forms and surveys.
+- Maintain professional behavior.
+
+A learner should not assume that a deadline has changed unless the change is
+announced through an official channel.
+
+A learner is responsible for checking updates regularly.
+
+===============================================================================
+4. OFFICIAL COMMUNICATION
+===============================================================================
+
+Official program information may be shared through one or more approved
+channels.
+
+Examples may include:
+
+- The learning platform.
+- Cohort announcements.
+- Official email.
+- Official community channels.
+- Program dashboards.
+- Mentor messages.
+- Instructor messages.
+
+Learners should check official communication channels regularly.
+
+Messages from unofficial sources should not be treated as official policy
+unless confirmed by Operations or the assigned mentor.
+
+Important announcements may include:
+
+- Session changes.
+- Deadline changes.
+- Maintenance notices.
+- Project instructions.
+- Evaluation dates.
+- Presentation schedules.
+- Required forms.
+- Graduation requirements.
+
+Learners should avoid relying only on information shared privately by another
+learner.
+
+===============================================================================
+5. PROFESSIONAL COMMUNICATION RULES
+===============================================================================
+
+Learners should communicate respectfully and clearly.
+
+When asking for technical help, learners should provide enough information for
+the mentor or support team to understand the issue.
+
+A good technical support message should include:
+
+1. What the learner is trying to do.
+2. What happened instead.
+3. The exact error message.
+4. Relevant code or screenshots when appropriate.
+5. What the learner already tried.
+6. The environment or tool being used.
+
+Example:
+
+"I am running the ingestion tests with `uv run pytest tests/test_ingestion.py -q`.
+Two tests fail when comparing cohort material paths on Windows. I checked the
+configuration file and the paths are normalized with forward slashes."
+
+Messages such as "It doesn't work" without context may take longer to resolve.
+
+Learners should not spam mentors or Operations with repeated messages about the
+same issue.
+
+If an issue is already being reviewed, allow the assigned support process to
+continue unless additional useful information becomes available.
+
+===============================================================================
+6. ATTENDANCE POLICY
+===============================================================================
+
+Attendance is an important part of the AI Track.
+
+Learners should attend all required live sessions unless they have a valid
+reason for absence.
+
+Attendance may be recorded using:
+
+- Platform attendance.
+- Session check-in.
+- Instructor attendance records.
+- Participation logs.
+- Other approved attendance mechanisms.
+
+Learners should join sessions on time.
+
+Repeated lateness may affect participation records.
+
+If a learner misses a session, the learner is responsible for:
+
+- Reviewing the recording if available.
+- Reading the provided materials.
+- Completing the related exercises.
+- Asking focused questions about unclear points.
+- Checking whether any deadlines were announced.
+
+Missing a session does not automatically extend a task deadline.
+
+===============================================================================
+7. LATE ARRIVAL
+===============================================================================
+
+Learners should make a reasonable effort to join sessions before the scheduled
+start time.
+
+If a learner joins late:
+
+- They should enter quietly.
+- They should avoid interrupting the instructor unnecessarily.
+- They should review anything they missed after the session.
+- They should not request the instructor to repeat an entire section unless
+  clarification is necessary for the whole group.
+
+Repeated late attendance may be treated as an attendance or engagement concern.
+
+===============================================================================
+8. ABSENCE
+===============================================================================
+
+If a learner expects to be absent, the learner should notify the appropriate
+mentor or Operations contact when required by the cohort process.
+
+A valid absence notification should be sent as early as reasonably possible.
+
+Absence does not automatically cancel:
+
+- Assignment deadlines.
+- Project responsibilities.
+- Team responsibilities.
+- Required forms.
+- Presentation responsibilities.
+
+Extensions are only valid when explicitly approved.
+
+===============================================================================
+9. SESSION ETIQUETTE
+===============================================================================
+
+During live sessions, learners should:
+
+- Be respectful.
+- Avoid disruptive behavior.
+- Keep unrelated discussions out of the session.
+- Ask relevant questions.
+- Follow instructor instructions.
+- Avoid interrupting other learners.
+- Use microphones responsibly.
+- Avoid sharing offensive or inappropriate content.
+- Keep chat messages related to the learning activity.
+
+Learners may disagree with a technical explanation, but disagreement should be
+expressed professionally.
+
+===============================================================================
+10. RECORDINGS AND MATERIALS
+===============================================================================
+
+Session recordings, slides, notebooks, PDFs, code examples, datasets, and other
+course materials are provided for learning purposes.
+
+Learners should not redistribute private cohort materials outside the program
+unless explicitly permitted.
+
+Materials may be updated during the cohort.
+
+The newest officially published version should be treated as the active version.
+
+===============================================================================
+11. ASSIGNMENTS AND WEEKLY TASKS
+===============================================================================
+
+Assignments are part of the learning process and should demonstrate the
+learner's own understanding.
+
+Each assignment may define:
+
+- Required files.
+- Required folder structure.
+- Submission method.
+- Deadline.
+- Naming convention.
+- Evaluation criteria.
+- Required screenshots.
+- Required README.
+- Required tests.
+- Required branch or repository.
+
+Learners must read the full task brief before starting.
+
+Submitting only part of the required deliverables may be graded as incomplete.
+
+===============================================================================
+12. DEADLINES
+===============================================================================
+
+All deadlines should be treated as strict unless the official task brief says
+otherwise.
+
+A deadline includes both date and time.
+
+Learners should pay attention to the stated timezone.
+
+If a deadline is published in Cairo time, the learner is responsible for
+submitting before that Cairo-time deadline.
+
+Learners should not wait until the final minutes to submit.
+
+Recommended practice:
+
+- Finish implementation early.
+- Run tests.
+- Run linting and type checks.
+- Review changed files.
+- Push the branch.
+- Open the Pull Request.
+- Leave time for review.
+- Address reviewer comments.
+- Confirm final submission status.
+
+A Pull Request opened before the deadline may still be considered incomplete if
+the task also requires review approval or merging.
+
+===============================================================================
+13. LATE SUBMISSIONS
+===============================================================================
+
+Late submissions may be rejected, penalized, or reviewed according to the
+specific cohort policy.
+
+A learner should never assume that a technical problem automatically grants an
+extension.
+
+If a serious blocker occurs, the learner should report it through the correct
+support channel before the deadline whenever possible.
+
+A blocker report should include evidence and useful technical details.
+
+===============================================================================
+14. EXTENSIONS
+===============================================================================
+
+Extensions are not automatic.
+
+Only authorized staff may approve an extension.
+
+An extension should be considered valid only when it is clearly confirmed
+through an official channel.
+
+Learners should keep written confirmation of approved deadline changes.
+
+===============================================================================
+15. TASK SUBMISSION QUALITY
+===============================================================================
+
+A valid submission should be complete, testable, and easy to review.
+
+Before submitting, learners should verify:
+
+- Required files exist.
+- Required functions are implemented.
+- Imports work.
+- Tests pass.
+- Code runs from the documented environment.
+- No secret keys are committed.
+- File paths are correct.
+- Branch contains the expected changes.
+- Pull Request targets the correct branch.
+- Commit history is reasonable.
+- README or documentation is updated when required.
+
+===============================================================================
+16. GIT AND GITHUB RULES
+===============================================================================
+
+Learners are expected to use Git carefully.
+
+Recommended workflow:
+
+1. Update the local main branch.
+2. Create or switch to the assigned feature branch.
+3. Make focused changes.
+4. Test the changes.
+5. Review `git status`.
+6. Review `git diff`.
+7. Commit with a clear message.
+8. Push the branch.
+9. Open or update the Pull Request.
+10. Resolve conflicts carefully.
+11. Request review.
+12. Merge only according to the team's workflow.
+
+Learners should avoid directly pushing unrelated work to main.
+
+Learners should not delete teammates' work to solve merge conflicts.
+
+When conflicts happen, understand both sides before choosing the final version.
+
+===============================================================================
+17. COMMIT MESSAGES
+===============================================================================
+
+Commit messages should explain the purpose of the change.
+
+Good examples:
+
+- `feat: add cohort-scoped retrieval`
+- `fix: normalize cohort material paths`
+- `test: add ingestion idempotency coverage`
+- `docs: document ticket sync flow`
+
+Weak examples:
+
+- `update`
+- `final`
+- `changes`
+- `test2`
+
+A clear commit history helps reviewers understand the work.
+
+===============================================================================
+18. PULL REQUEST RULES
+===============================================================================
+
+A Pull Request should be focused on the assigned task.
+
+The description should normally include:
+
+- What was implemented.
+- Why the change was needed.
+- Main files changed.
+- How the implementation was tested.
+- Important design decisions.
+- Known limitations.
+- Screenshots when relevant.
+- Test results when relevant.
+
+Learners should respond professionally to review comments.
+
+A review comment is not a personal criticism. It is part of software
+development.
+
+===============================================================================
+19. PEER REVIEW
+===============================================================================
+
+Peer review may be a required part of the track.
+
+When reviewing another learner's code:
+
+- Read the task requirements first.
+- Review the actual diff.
+- Check correctness.
+- Check edge cases.
+- Check naming.
+- Check security.
+- Check tests.
+- Check whether the code changes unrelated modules.
+- Give specific feedback.
+- Avoid approving code that you did not inspect.
+
+Useful feedback should explain the issue and, when possible, suggest a direction.
+
+===============================================================================
+20. TESTING EXPECTATIONS
+===============================================================================
+
+Learners should test their work before submission.
+
+Depending on the repository, checks may include:
+
+- Unit tests.
+- Integration tests.
+- Type checking.
+- Linting.
+- Formatting.
+- Security checks.
+- Evaluation scripts.
+- End-to-end tests.
+
+When the repository provides a command such as:
+
+`make check`
+
+learners should run it before final submission whenever their environment allows.
+
+If unrelated existing failures occur, learners should:
+
+- Identify them.
+- Confirm whether their changed files pass.
+- Document the unrelated failure clearly.
+- Avoid falsely claiming that the full repository passes.
+
+===============================================================================
+21. DEBUGGING RULES
+===============================================================================
+
+Debugging is part of the learning process.
+
+Learners are expected to investigate errors before escalating them.
+
+Recommended debugging sequence:
+
+1. Read the complete error.
+2. Identify the first meaningful traceback line.
+3. Confirm the current branch.
+4. Confirm the environment.
+5. Confirm dependencies are installed.
+6. Check environment variables.
+7. Reproduce the issue.
+8. Isolate the failing component.
+9. Search the repository for related code.
+10. Run the smallest relevant test.
+11. Document attempted fixes.
+12. Ask for help with evidence.
+
+Do not randomly change many files at once because this makes debugging harder.
+
+===============================================================================
+22. PYTHON ENVIRONMENT RULES
+===============================================================================
+
+Learners should use the dependency-management method defined by the repository.
+
+If the project uses `uv`, prefer repository commands such as:
+
+- `uv sync`
+- `uv run python ...`
+- `uv run pytest ...`
+- `uv add ...`
+- `uv add --dev ...`
+
+Avoid mixing unrelated environment managers unless necessary.
+
+Do not manually modify the virtual environment when the project dependency
+manager can manage the dependency properly.
+
+===============================================================================
+23. ENVIRONMENT VARIABLES AND SECRETS
+===============================================================================
+
+Secrets must never be committed to Git.
+
+Examples of secrets include:
+
+- API keys.
+- Database passwords.
+- JWT secrets.
+- Access tokens.
+- Private credentials.
+- Service account keys.
+
+Secrets should be loaded through environment variables or approved secret
+management systems.
+
+Files such as `.env` should only be committed when the repository explicitly
+allows a safe example file such as `.env.example`.
+
+A learner who accidentally exposes a real secret should report it immediately
+so the credential can be rotated.
+
+===============================================================================
+24. AI TOOL USAGE
+===============================================================================
+
+AI tools may be used as learning and productivity aids unless a specific task
+forbids them.
+
+However, learners remain responsible for every line they submit.
+
+Using AI does not remove the learner's responsibility to:
+
+- Understand the code.
+- Test the code.
+- Explain the code.
+- Verify security.
+- Verify correctness.
+- Follow repository architecture.
+- Follow task requirements.
+- Avoid fabricated APIs or functions.
+
+A learner should never submit AI-generated code without reviewing it.
+
+If asked during a review or presentation, the learner should be able to explain
+their implementation.
+
+===============================================================================
+25. ACADEMIC INTEGRITY
+===============================================================================
+
+Learners must not present another person's work as their own.
+
+Prohibited behavior may include:
+
+- Copying another learner's complete solution.
+- Submitting another team's repository as personal work.
+- Removing attribution where attribution is required.
+- Fabricating test results.
+- Fabricating screenshots.
+- Fabricating Pull Request approvals.
+- Claiming work was completed when it was not.
+- Manipulating evidence of attendance or submission.
+
+Collaboration is encouraged when the task allows it, but submitted work should
+still follow the ownership rules of the assignment.
+
+===============================================================================
+26. TEAMWORK
+===============================================================================
+
+Team projects require clear responsibility.
+
+Teams should:
+
+- Divide work clearly.
+- Communicate blockers.
+- Avoid duplicating work unnecessarily.
+- Review integration points.
+- Merge carefully.
+- Respect ownership.
+- Keep each other informed about interface changes.
+
+A learner should not silently change a shared interface that may break a
+teammate's work.
+
+Changes to shared contracts should be communicated.
+
+===============================================================================
+27. PROJECT OWNERSHIP
+===============================================================================
+
+When working on a team project, each learner should understand:
+
+- The project objective.
+- Their assigned module.
+- Inputs to their module.
+- Outputs from their module.
+- Dependencies.
+- Integration points.
+- Failure behavior.
+- Tests.
+
+A learner should not focus only on writing files. Integration is part of
+successful delivery.
+
+===============================================================================
+28. AI PROJECT RELIABILITY
+===============================================================================
+
+AI systems must be designed with reliability in mind.
+
+Learners should avoid assuming that an AI model is always correct.
+
+For AI applications, consider:
+
+- Input validation.
+- Output validation.
+- Hallucination risk.
+- Prompt injection.
+- Retrieval quality.
+- Model failure.
+- API failure.
+- Timeouts.
+- Rate limits.
+- Privacy.
+- Logging.
+- Monitoring.
+- Fallback behavior.
+
+The application should fail safely where possible.
+
+===============================================================================
+29. GROUNDING RULES FOR SUPPORT CHATBOTS
+===============================================================================
+
+When building a support assistant for the cohort, the assistant should answer
+operational questions from approved cohort materials.
+
+The assistant should not invent cohort-specific facts.
+
+If the requested information is not present in approved materials, the safe
+behavior is to say that the information could not be verified and direct the
+learner to the appropriate human support path.
+
+For grounded support systems:
+
+- Retrieved evidence should support the answer.
+- Source metadata should be preserved.
+- Citations should refer to real retrieved sources.
+- Unknown citations should be rejected.
+- General model knowledge should not replace official program information.
+- Missing evidence should result in an honest fallback.
+
+===============================================================================
+30. COHORT ISOLATION
+===============================================================================
+
+Each learner belongs to a specific cohort.
+
+Cohort-specific information must not leak between cohorts.
+
+Examples of cohort-specific information include:
+
+- Session dates.
+- Deadlines.
+- Instructors.
+- Mentors.
+- Project requirements.
+- Announcements.
+- Attendance policies.
+- Cohort-specific resources.
+
+If two cohorts have different deadlines, a learner from Cohort A must not
+receive Cohort B's deadline.
+
+Cohort filtering should be enforced at the data retrieval layer, not only in an
+LLM prompt.
+
+===============================================================================
+31. KNOWLEDGE BASE MATERIALS
+===============================================================================
+
+Only approved materials should be treated as authoritative sources for cohort
+operations.
+
+Approved materials may include:
+
+- FAQ files.
+- Official schedules.
+- Onboarding documents.
+- Program guides.
+- Policy documents.
+- Task briefs.
+- Official announcements.
+- Approved project documentation.
+
+Every knowledge-base record should preserve useful metadata.
+
+Recommended metadata:
+
+- Cohort ID.
+- Source title.
+- Document type.
+- Source identifier.
+- Chunk identifier.
+- Version or update information where available.
+
+===============================================================================
+32. KNOWLEDGE BASE UPDATES
+===============================================================================
+
+Knowledge-base ingestion should be re-runnable.
+
+Running ingestion again should not blindly create duplicate copies of the same
+content.
+
+When an approved document changes, the system should update or replace the
+stored representation according to the repository's ingestion design.
+
+Old or retired materials should not continue to answer questions if they are no
+longer active.
+
+===============================================================================
+33. MULTI-COHORT CONFIGURATION
+===============================================================================
+
+New cohorts should be configurable without rewriting core application code.
+
+A cohort configuration may include:
+
+- Cohort ID.
+- Cohort name.
+- Enabled or disabled state.
+- Materials directory.
+- Knowledge sources.
+- Program-specific settings.
+
+Cohort IDs should be normalized consistently.
+
+Unknown or disabled cohorts should fail safely.
+
+===============================================================================
+34. DATABASE RULES
+===============================================================================
+
+Learners should understand the repository's database design before modifying it.
+
+Do not create duplicate models for an existing table.
+
+Database changes should normally use migrations.
+
+When using Alembic:
+
+- Check the current migration head.
+- Create a new migration.
+- Review generated SQL.
+- Apply the migration in development.
+- Test downgrade behavior when required.
+- Avoid editing historical migrations after they are already shared unless the
+  team explicitly agrees.
+
+===============================================================================
+35. API DEVELOPMENT RULES
+===============================================================================
+
+APIs should follow the project's architecture and existing conventions.
+
+Common expectations include:
+
+- Request validation.
+- Response schemas.
+- Authentication.
+- Authorization when required.
+- Rate limiting.
+- Safe error handling.
+- Structured logging.
+- Consistent status codes.
+- No sensitive stack traces in client responses.
+
+Business logic should normally remain in service modules rather than being
+duplicated inside API route functions.
+
+===============================================================================
+36. AUTHENTICATION
+===============================================================================
+
+Learners must not bypass authentication requirements for convenience.
+
+Authenticated endpoints should validate the user through the approved
+authentication dependency or service.
+
+A successful login proves identity, but identity alone may not prove
+authorization.
+
+If an endpoint is Operations-only, the implementation should check an
+appropriate role or permission when the platform supports one.
+
+===============================================================================
+37. RATE LIMITING
+===============================================================================
+
+Rate limits help protect APIs against accidental abuse and excessive requests.
+
+Learners should use the repository's existing rate-limiting mechanism instead
+of creating an unrelated implementation.
+
+Rate limits should be configurable where appropriate.
+
+===============================================================================
+38. ERROR HANDLING
+===============================================================================
+
+Errors shown to users should be safe and understandable.
+
+Do not expose:
+
+- Database passwords.
+- SQL queries containing private data.
+- API keys.
+- Internal prompts.
+- Full stack traces.
+- Internal service secrets.
+
+Detailed technical errors belong in protected logs.
+
+User-facing errors should explain what the user can do next.
+
+===============================================================================
+39. OBSERVABILITY
+===============================================================================
+
+Production-oriented AI systems should be observable.
+
+Depending on project requirements, observability may include:
+
+- Structured logs.
+- Request IDs.
+- Session IDs.
+- User IDs where privacy permits.
+- Metrics.
+- Tracing.
+- LLM call traces.
+- Error counters.
+- Latency measurements.
+
+Observability should help the team diagnose failures without exposing
+unnecessary personal data.
+
+===============================================================================
+40. PRIVACY
+===============================================================================
+
+Learner privacy must be respected.
+
+Only information necessary for the application purpose should be collected,
+stored, or exposed.
+
+Support summaries should be concise and should avoid unnecessary private
+information.
+
+Learners should not put passwords, access tokens, secret keys, or highly
+sensitive information into public team channels.
+
+===============================================================================
+41. SUPPORT ESCALATION
+===============================================================================
+
+Some problems require human support.
+
+Examples include:
+
+- The assistant cannot verify an answer.
+- The learner explicitly requests a human.
+- The learner is frustrated after repeated failed attempts.
+- A technical problem cannot be resolved through normal support.
+- Account or platform access requires administrative action.
+- A policy question requires human judgment.
+- The available documents conflict.
+
+When escalation occurs, the system or learner should provide useful context.
+
+A good escalation summary includes:
+
+- The problem.
+- What was tried.
+- Relevant context.
+- Suggested next step.
+- Open questions if any.
+
+===============================================================================
+42. TICKETS
+===============================================================================
+
+Internal tickets may be used to track unresolved learner issues.
+
+A ticket should contain enough information for Operations to understand the
+problem without reading an unnecessarily long chat history.
+
+Typical ticket states may include:
+
+- Open.
+- In progress.
+- Resolved.
+- Closed.
+
+The internal ticket record should remain the source of truth when the system
+also syncs to an external ticketing workspace.
+
+===============================================================================
+43. SUPPORT RESPONSE EXPECTATIONS
+===============================================================================
+
+Learners should use normal support channels and avoid opening duplicate requests
+for the same issue unless instructed.
+
+Response time may depend on:
+
+- Issue severity.
+- Time of day.
+- Mentor availability.
+- Number of open issues.
+- Whether the issue requires engineering or administration.
+
+Submitting repeated duplicate messages does not guarantee a faster response.
+
+===============================================================================
+44. PROFILE INFORMATION
+===============================================================================
+
+Learners may be required to provide profile information necessary for cohort
+operations.
+
+Examples may include:
+
+- Preferred name.
+- Cohort assignment.
+- Timezone.
+- Notification preferences.
+
+Profile information should be valid and accurate.
+
+When timezone information is required, learners should use a valid IANA
+timezone such as:
+
+`Africa/Cairo`
+
+rather than informal values such as:
+
+`Egypt time`
+
+or:
+
+`GMT+2`
+
+when the system explicitly requires an IANA timezone.
+
+===============================================================================
+45. NOTIFICATIONS
+===============================================================================
+
+The program may send operational notifications.
+
+Examples include:
+
+- Session reminders.
+- Deadline reminders.
+- At-risk nudges.
+- Feedback follow-ups.
+
+Learners should keep notification preferences updated when the platform
+supports preference controls.
+
+Opt-out settings should be respected according to program policy.
+
+===============================================================================
+46. DEADLINE REMINDERS
+===============================================================================
+
+A reminder is a convenience, not a replacement for learner responsibility.
+
+A learner is still responsible for a deadline even if:
+
+- A reminder is delayed.
+- A notification is missed.
+- An email goes to spam.
+- The learner is offline.
+
+Always use the official schedule as the source of truth.
+
+===============================================================================
+47. AT-RISK SUPPORT
+===============================================================================
+
+The program may identify learners who appear to be falling behind.
+
+Possible indicators include:
+
+- Missed deadlines.
+- Extended inactivity.
+- Low task completion.
+- Repeated low feedback.
+- Repeated absence.
+
+At-risk detection should be used to offer support, not to shame learners.
+
+Learners who receive a support nudge are encouraged to communicate blockers
+early.
+
+===============================================================================
+48. TECHNICAL PRESENTATIONS
+===============================================================================
+
+Learners may be asked to present their work.
+
+During a presentation, learners should be prepared to explain:
+
+- The problem.
+- The architecture.
+- Their assigned contribution.
+- The implementation flow.
+- Main files.
+- Important functions.
+- Tests.
+- Limitations.
+- Integration with teammates' modules.
+- What they would improve next.
+
+Reading code line-by-line without explaining the design is not enough.
+
+===============================================================================
+49. DEMONSTRATIONS
+===============================================================================
+
+A project demonstration should use a tested scenario.
+
+Before presenting:
+
+- Start required services.
+- Verify environment variables.
+- Confirm the database is reachable.
+- Confirm test accounts exist.
+- Confirm required knowledge is ingested.
+- Confirm the correct branch is deployed.
+- Test the main user flow.
+- Prepare a fallback explanation in case an external service fails.
+
+A demo should show behavior, not only source code.
+
+===============================================================================
+50. PROJECT DOCUMENTATION
+===============================================================================
+
+Documentation should help another developer understand how to run or maintain
+the project.
+
+Useful documentation may include:
+
+- Setup steps.
+- Environment variables.
+- Database setup.
+- Migration commands.
+- Ingestion instructions.
+- Test commands.
+- Architecture summary.
+- API usage.
+- Troubleshooting.
+- Known limitations.
+
+===============================================================================
+51. FILE NAMING AND STRUCTURE
+===============================================================================
+
+Learners should follow the repository's existing directory structure.
+
+Do not create duplicate modules in random folders when an official location
+already exists.
+
+Before adding a new file, search the repository.
+
+For example:
+
+- APIs belong with existing API modules.
+- Database models belong with existing models.
+- Services belong with services.
+- Tests belong with the project's testing structure.
+
+===============================================================================
+52. CODE QUALITY
+===============================================================================
+
+Code should prioritize correctness and maintainability.
+
+Good code should be:
+
+- Understandable.
+- Focused.
+- Testable.
+- Consistent.
+- Secure.
+- Reasonably typed.
+- Not unnecessarily duplicated.
+
+Avoid overengineering simple requirements.
+
+A complex abstraction is not automatically better than a simple implementation.
+
+===============================================================================
+53. TYPE SAFETY
+===============================================================================
+
+When the project uses type checking, learners should keep function signatures
+and models clear.
+
+Avoid suppressing type errors without understanding them.
+
+If a type error is caused by a real contract mismatch, fix the contract rather
+than hiding the warning.
+
+===============================================================================
+54. LINTING
+===============================================================================
+
+Linting rules should be followed unless there is a strong project-approved
+reason not to.
+
+Learners should avoid introducing:
+
+- Unused imports.
+- Unused variables.
+- Dead code.
+- Inconsistent formatting.
+- Invalid type annotations.
+- Unreachable branches.
+
+===============================================================================
+55. TEST DESIGN
+===============================================================================
+
+Tests should verify behavior, not implementation trivia.
+
+Good tests are:
+
+- Deterministic.
+- Isolated.
+- Readable.
+- Focused on expected contracts.
+- Fast where possible.
+
+External APIs should normally be mocked in unit tests.
+
+A unit test should not require a production API key.
+
+===============================================================================
+56. EDGE CASES
+===============================================================================
+
+Learners should test important edge cases.
+
+Examples:
+
+- Empty input.
+- Missing files.
+- Unknown cohort.
+- Disabled cohort.
+- Duplicate ingestion.
+- Changed content.
+- Retrieval with no results.
+- Invalid citations.
+- Network failure.
+- Invalid model output.
+- Unauthorized request.
+- Missing database record.
+
+===============================================================================
+57. SECURITY REVIEW
+===============================================================================
+
+Before final submission, check for common security mistakes.
+
+Verify:
+
+- No secrets are committed.
+- Authentication is not bypassed.
+- Inputs are validated.
+- File paths are handled safely.
+- Error messages do not expose secrets.
+- SQL is handled through safe APIs.
+- User-controlled values are not trusted blindly.
+- Cohort IDs cannot be used to access another cohort's information.
+
+===============================================================================
+58. PROMPT INJECTION
+===============================================================================
+
+AI applications that process external or retrieved text should treat that text
+as untrusted data.
+
+A retrieved document may contain malicious instructions such as:
+
+"Ignore the system prompt."
+
+The model should treat this as content, not authority.
+
+System rules must remain higher priority than retrieved document instructions.
+
+===============================================================================
+59. HALLUCINATION PREVENTION
+===============================================================================
+
+For operational support systems, guessing is not acceptable.
+
+If the system cannot verify:
+
+- A deadline.
+- A session date.
+- A policy.
+- A mentor assignment.
+- A submission requirement.
+
+it should not invent one.
+
+The correct fallback is to state that the information could not be verified
+from approved materials.
+
+===============================================================================
+60. SOURCE ATTRIBUTION
+===============================================================================
+
+When source attribution is enabled, the chatbot should cite sources that were
+actually retrieved.
+
+The system must not invent:
+
+- File names.
+- Source IDs.
+- URLs.
+- Document titles.
+
+Citation validation should happen programmatically where possible.
+
+===============================================================================
+61. CHATBOT BEHAVIOR
+===============================================================================
+
+The support chatbot should be helpful, polite, concise, and professional.
+
+For normal social messages such as:
+
+- "Hello"
+- "Hi"
+- "How are you?"
+- "Thank you"
+
+the chatbot may respond naturally and politely when the product design allows
+small talk.
+
+However, cohort-specific facts must still come from approved materials.
+
+===============================================================================
+62. LEARNER NAME USAGE
+===============================================================================
+
+When the platform has a verified preferred name or first name, the chatbot may
+use it naturally.
+
+The chatbot should not overuse the learner's name in every sentence.
+
+Name usage should feel supportive rather than artificial.
+
+===============================================================================
+63. SUPPORT TONE
+===============================================================================
+
+The assistant and human support team should communicate in a calm,
+non-judgmental manner.
+
+Avoid language that embarrasses learners for:
+
+- Missing a task.
+- Asking a basic question.
+- Making a coding mistake.
+- Requiring clarification.
+
+The goal is to help the learner move forward while still enforcing program
+requirements.
+
+===============================================================================
+64. HONESTY
+===============================================================================
+
+Learners and staff should communicate honestly.
+
+Do not claim:
+
+- A test passed if it was not run.
+- A feature is integrated if it is unused.
+- A ticket was created if no ticket exists.
+- A deadline changed if no official change exists.
+- A database migration succeeded if it was not applied.
+
+Accurate status reporting is a professional skill.
+
+===============================================================================
+65. WHEN WORK IS CONSIDERED COMPLETE
+===============================================================================
+
+A coding task is not complete merely because a file exists.
+
+A task is normally complete when:
+
+- The required behavior is implemented.
+- The feature is integrated.
+- Tests pass.
+- Required checks pass.
+- Documentation is sufficient.
+- Required review is complete.
+- The final branch contains the work.
+- The submission follows the assignment process.
+
+===============================================================================
+66. INTEGRATION RULE
+===============================================================================
+
+A feature that is never connected to the live application may not satisfy an
+end-to-end requirement.
+
+Learners should verify the runtime path.
+
+For example:
+
+User action
+    ↓
+API
+    ↓
+Service
+    ↓
+Graph or business logic
+    ↓
+Database / knowledge base
+    ↓
+Response
+
+Testing only an isolated helper function is not enough when the task requires a
+working vertical slice.
+
+===============================================================================
+67. DATABASE MIGRATION SAFETY
+===============================================================================
+
+Before creating a migration:
+
+- Pull the latest branch.
+- Check current Alembic heads.
+- Confirm no teammate added a newer migration.
+- Create a new revision.
+- Review upgrade logic.
+- Review downgrade logic.
+
+Do not guess the previous migration revision in a collaborative repository.
+
+===============================================================================
+68. LOCAL AND DEPLOYED ENVIRONMENTS
+===============================================================================
+
+Behavior may differ between:
+
+- Local development.
+- Docker.
+- CI.
+- Staging.
+- Production.
+
+Learners should know which environment they are testing.
+
+Configuration values may differ between environments.
+
+Never assume that a local `.env` file exists in deployment.
+
+===============================================================================
+69. DEPLOYMENT
+===============================================================================
+
+A deployment should use the approved repository and configuration.
+
+Before deployment:
+
+- Confirm the branch or commit.
+- Confirm migrations.
+- Confirm environment variables.
+- Confirm service startup.
+- Confirm health checks.
+- Confirm database connection.
+- Confirm required external services.
+- Perform a small smoke test.
+
+===============================================================================
+70. DATABASE DATA FOR TESTING
+===============================================================================
+
+Test data should be clearly distinguishable from real learner data.
+
+Use safe test accounts where possible.
+
+Avoid using real personal data in screenshots or public issue reports.
+
+===============================================================================
+71. COHORT TESTING
+===============================================================================
+
+For multi-cohort testing, create intentionally different facts.
+
+Example:
+
+Cohort AI-A:
+"Final project deadline is August 20."
+
+Cohort AI-B:
+"Final project deadline is September 3."
+
+Then verify that learners receive only the deadline for their assigned cohort.
+
+Using identical facts in both cohorts may fail to reveal a leakage bug.
+
+===============================================================================
+72. KNOWLEDGE BASE TESTING
+===============================================================================
+
+A useful knowledge-base test set should include:
+
+- Direct FAQ questions.
+- Paraphrased questions.
+- Questions with no answer.
+- Questions containing unrelated words.
+- Questions about another cohort.
+- Questions that try to force the model to ignore the knowledge base.
+
+===============================================================================
+73. RETRIEVAL QUALITY
+===============================================================================
+
+Retrieval should return useful evidence, not merely text with similar words.
+
+When tuning retrieval:
+
+- Understand whether score means similarity or distance.
+- Do not choose arbitrary thresholds without testing.
+- Inspect realistic queries.
+- Keep cohort filtering mandatory.
+- Preserve source metadata.
+
+===============================================================================
+74. EMPTY OR UNKNOWN COHORT
+===============================================================================
+
+If a learner has no valid cohort assignment, the system should fail safely.
+
+It should not search every cohort.
+
+It should not choose a cohort randomly.
+
+It should not default to another learner's cohort.
+
+The user should receive a safe message directing them to support or profile
+configuration.
+
+===============================================================================
+75. COHORT ASSIGNMENT
+===============================================================================
+
+A learner's cohort assignment should come from trusted platform data.
+
+The chatbot should not trust a learner simply typing:
+
+"My cohort is AI-B"
+
+if the authenticated account is assigned to AI-A.
+
+Cohort identity should be controlled by the application or authorized staff.
+
+===============================================================================
+76. SCHEDULE CHANGES
+===============================================================================
+
+Schedules may occasionally change.
+
+Only official updates override previously published schedule information.
+
+When an updated schedule is approved, the knowledge base should be refreshed.
+
+Learners should check official announcements before important sessions or
+deadlines.
+
+===============================================================================
+77. PROJECT DEADLINES
+===============================================================================
+
+Project deadlines may have multiple stages, such as:
+
+- Topic approval.
+- Proposal.
+- First checkpoint.
+- Technical review.
+- Final submission.
+- Presentation.
+
+Learners should not assume that "project deadline" always refers only to final
+submission.
+
+Read the exact task announcement.
+
+===============================================================================
+78. PRESENTATION ATTENDANCE
+===============================================================================
+
+If project presentations are required, learners should attend at their assigned
+time.
+
+Teams should verify:
+
+- Presenter availability.
+- Demo readiness.
+- Repository access.
+- Required links.
+- Slides.
+- Backup screenshots.
+
+Missing a presentation may be treated separately from missing the code
+submission.
+
+===============================================================================
+79. TEAM PROJECT RESPONSIBILITY
+===============================================================================
+
+Each team member should contribute meaningfully.
+
+Teams should keep evidence of contribution through:
+
+- Commits.
+- Pull Requests.
+- Issues.
+- Task boards.
+- Documentation.
+- Meeting notes when appropriate.
+
+A team member should understand the integrated project, not only their isolated
+file.
+
+===============================================================================
+80. DATASETS
+===============================================================================
+
+Learners should respect dataset licenses and usage conditions.
+
+Do not publish sensitive datasets.
+
+Do not include credentials or personal information inside sample datasets.
+
+When using external datasets, document the source when required.
+
+===============================================================================
+81. MODEL EVALUATION
+===============================================================================
+
+AI model performance should be evaluated using suitable metrics.
+
+Learners should not report only training accuracy.
+
+Depending on the task, relevant metrics may include:
+
+- Accuracy.
+- Precision.
+- Recall.
+- F1 score.
+- ROC-AUC.
+- Mean squared error.
+- Mean absolute error.
+- Confusion matrix.
+- Retrieval precision.
+- Grounding success.
+- Hallucination rate.
+
+Choose metrics that match the problem.
+
+===============================================================================
+82. REPRODUCIBILITY
+===============================================================================
+
+Where reasonable, ML experiments should be reproducible.
+
+Learners should consider:
+
+- Random seeds.
+- Dependency versions.
+- Saved configuration.
+- Dataset version.
+- Training parameters.
+- Model checkpoints.
+- Experiment logs.
+
+===============================================================================
+83. LARGE LANGUAGE MODEL USAGE
+===============================================================================
+
+When using an LLM provider:
+
+- Load credentials from environment variables.
+- Use the project's shared client or service.
+- Handle timeouts.
+- Handle malformed responses.
+- Respect rate limits.
+- Avoid sending unnecessary private data.
+- Add fallback behavior when required.
+- Test without relying on live network calls when possible.
+
+===============================================================================
+84. EMBEDDINGS
+===============================================================================
+
+Embedding models are used to represent text as vectors for similarity search.
+
+The embedding model used for ingestion and retrieval should be compatible.
+
+Changing embedding models may require re-ingesting stored knowledge.
+
+Do not mix incompatible embedding dimensions in the same vector storage without
+an explicit migration strategy.
+
+===============================================================================
+85. VECTOR DATABASE
+===============================================================================
+
+When pgvector or another vector store is used:
+
+- Store useful metadata.
+- Apply cohort filters.
+- Limit result count.
+- Understand scoring semantics.
+- Avoid returning retired documents.
+- Keep ingestion and retrieval behavior consistent.
+
+===============================================================================
+86. RAG SYSTEM RULE
+===============================================================================
+
+A Retrieval-Augmented Generation system is not reliable merely because it uses
+a vector database.
+
+Reliability requires:
+
+- Correct ingestion.
+- Correct metadata.
+- Correct filtering.
+- Relevant retrieval.
+- Strict prompting.
+- Output validation.
+- Safe refusal.
+- Testing.
+
+===============================================================================
+87. CHAT HISTORY
+===============================================================================
+
+Conversation history should be handled carefully.
+
+Long histories may contain:
+
+- Outdated information.
+- Private information.
+- Irrelevant context.
+- Previous errors.
+
+Use only the amount of conversation context needed for the task.
+
+===============================================================================
+88. SUPPORT SUMMARIES
+===============================================================================
+
+A support summary should be concise.
+
+A good summary contains:
+
+Problem:
+What is currently wrong?
+
+What was tried:
+What actions have already been attempted?
+
+Context:
+What information is important for understanding the issue?
+
+Suggested next step:
+What should the support team investigate or do?
+
+The summary should avoid unnecessary transcript copying.
+
+===============================================================================
+89. HUMAN HANDOFF
+===============================================================================
+
+Human escalation is a feature, not a failure.
+
+An AI assistant should hand off when the issue requires:
+
+- Human judgment.
+- Administrative access.
+- Policy interpretation not covered by materials.
+- Manual account changes.
+- Investigation of a persistent technical issue.
+- Resolution of conflicting official information.
+
+===============================================================================
+90. RESPECTFUL CONDUCT
+===============================================================================
+
+Harassment, discrimination, threats, abusive language, or targeted personal
+attacks are not acceptable in the cohort.
+
+Disagreements should remain focused on ideas and work.
+
+Serious conduct concerns should be reported through the official process.
+
+===============================================================================
+91. COMMUNITY SUPPORT
+===============================================================================
+
+Learners are encouraged to help each other.
+
+Helpful peer support includes:
+
+- Explaining concepts.
+- Sharing debugging approaches.
+- Reviewing code.
+- Pointing to documentation.
+- Discussing architecture.
+
+Peer support should not become unauthorized copying of complete assignments.
+
+===============================================================================
+92. OFFICE HOURS
+===============================================================================
+
+Office hours may be used for:
+
+- Clarifying requirements.
+- Debugging blockers.
+- Reviewing concepts.
+- Discussing project architecture.
+- Getting feedback.
+
+Learners should arrive with a specific question or problem when possible.
+
+===============================================================================
+93. MENTOR SUPPORT
+===============================================================================
+
+Mentors support technical progress.
+
+A mentor may:
+
+- Review code.
+- Explain architecture.
+- Help debug issues.
+- Clarify technical requirements.
+- Suggest testing approaches.
+- Review drafts.
+
+Mentor feedback should be considered seriously, but learners remain responsible
+for implementing and testing their final solution.
+
+===============================================================================
+94. OPERATIONS SUPPORT
+===============================================================================
+
+Operations typically handles non-technical program matters such as:
+
+- Cohort administration.
+- Attendance records.
+- Schedule communication.
+- Account or enrollment issues.
+- Official deadline questions.
+- Program procedures.
+- Escalated learner support.
+
+Technical questions should follow the technical support route defined by the
+cohort.
+
+===============================================================================
+95. ADMINISTRATIVE ISSUES
+===============================================================================
+
+Examples of administrative issues include:
+
+- Account access.
+- Incorrect cohort assignment.
+- Attendance record disputes.
+- Platform permissions.
+- Official deadline clarification.
+- Enrollment status.
+- Certificate eligibility.
+
+These issues may require human review.
+
+===============================================================================
+96. FEEDBACK
+===============================================================================
+
+Learners are encouraged to provide constructive feedback.
+
+Good feedback describes:
+
+- What happened.
+- Where it happened.
+- Why it caused difficulty.
+- What improvement would help.
+
+Feedback should focus on the process or product rather than attacking
+individuals.
+
+===============================================================================
+97. SURVEYS
+===============================================================================
+
+Required surveys or feedback forms should be completed before their deadlines.
+
+Survey responses may be used to improve:
+
+- Sessions.
+- Mentoring.
+- Platform experience.
+- Curriculum delivery.
+- Support quality.
+
+===============================================================================
+98. CERTIFICATE OR COMPLETION REQUIREMENTS
+===============================================================================
+
+Completion or certificate eligibility may depend on multiple requirements.
+
+Possible requirements may include:
+
+- Attendance.
+- Assignment completion.
+- Project submission.
+- Presentation.
+- Required evaluations.
+- Required surveys.
+- Conduct.
+- Other cohort-specific criteria.
+
+Learners should consult the official cohort completion policy for exact
+requirements.
+
+===============================================================================
+99. FINAL PROJECT EXPECTATIONS
+===============================================================================
+
+A final AI project should demonstrate practical understanding.
+
+Depending on the assigned project, learners may be expected to provide:
+
+- Problem definition.
+- Dataset.
+- Data preprocessing.
+- Model or AI system.
+- Evaluation.
+- Source code.
+- Documentation.
+- API or UI.
+- Deployment.
+- Presentation.
+- Team contribution evidence.
+
+The exact requirements come from the official project brief.
+
+===============================================================================
+100. FINAL CHECKLIST FOR LEARNERS
+===============================================================================
+
+Before any major submission, verify:
+
+[ ] I read the complete task brief.
+[ ] I am working on the correct branch.
+[ ] I implemented all required deliverables.
+[ ] I did not modify unrelated shared modules unnecessarily.
+[ ] My code runs.
+[ ] My relevant tests pass.
+[ ] I checked linting/typechecking when required.
+[ ] I did not commit secrets.
+[ ] I reviewed my Git diff.
+[ ] I pushed the latest commits.
+[ ] My Pull Request targets the correct branch.
+[ ] My PR description explains the implementation.
+[ ] I requested review when required.
+[ ] I addressed review comments.
+[ ] I verified the live integration path.
+[ ] I submitted before the deadline.
+
+===============================================================================
+101. FINAL PRINCIPLE
+===============================================================================
+
+The AI Track is designed to develop independent, responsible engineers.
+
+The goal is not only to finish tasks.
+
+Learners should learn to:
+
+- Understand requirements.
+- Design reliable systems.
+- Debug methodically.
+- Communicate clearly.
+- Collaborate responsibly.
+- Protect data.
+- Test their assumptions.
+- Admit uncertainty.
+- Ask good questions.
+- Deliver working software.
+
+The most important professional habit is to verify that what you claim is
+actually true.
+
+If a system is not tested, do not claim it is tested.
+
+If information is not verified, do not present it as official.
+
+If a question cannot be answered from approved cohort materials, use the
+official support path rather than guessing.
+
+END OF AI TRACK RULES AND GUIDELINES

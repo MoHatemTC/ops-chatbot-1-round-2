@@ -1,14 +1,12 @@
 """Ops Console KB admin API backed by the cohort database tables."""
 
-
-
 import os
 import re
 import shutil
 from datetime import UTC, date, datetime
 from pathlib import Path
-from fastapi import Body
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
+
+from fastapi import APIRouter, Body, Depends, File, Form, HTTPException, Request, UploadFile
 from pydantic import BaseModel, Field, field_validator
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
@@ -397,7 +395,7 @@ async def create_cohort(
 async def update_cohort(
     request: Request,
     cohort_id: str,
-    payload: CohortUpdateIn,
+    payload: CohortUpdateIn = Body(...),
     user: User = Depends(get_current_user),
 ):
     """Update cohort metadata in PostgreSQL.
@@ -581,11 +579,28 @@ async def upload_material(
     request: Request,
     cohort_id: str,
     title: str = Form(..., min_length=1, max_length=300),
-    material_type: SourceType = Form(...),
+    material_type: str = Form(...),
     file: UploadFile = File(...),
     user: User = Depends(get_current_user),
 ):
-    """Upload and register an approved material for an enabled cohort."""
+    """Upload and register an approved material for an enabled cohort.
+
+    ``material_type`` is accepted as a plain multipart form string and then
+    validated explicitly as ``SourceType``. This avoids a FastAPI/Pydantic
+    ForwardRef failure with postponed annotations.
+    """
+    try:
+        source_type = SourceType(material_type)
+    except ValueError as exc:
+        allowed = ", ".join(item.value for item in SourceType)
+        raise HTTPException(
+            status_code=422,
+            detail=(
+                f"Invalid material type {material_type!r}. "
+                f"Allowed values: {allowed}."
+            ),
+        ) from exc
+
     with db_service.get_session_maker() as session:
         _sync_expired_cohorts(session)
         cohort = _get_cohort_or_404(session, cohort_id)
@@ -624,11 +639,11 @@ async def upload_material(
                 ),
             )
 
-        subdirectory = TYPE_TO_DIR.get(material_type)
+        subdirectory = TYPE_TO_DIR.get(source_type)
         if subdirectory is None:
             raise HTTPException(
                 status_code=400,
-                detail=f"Unsupported material type: {material_type}",
+                detail=f"Unsupported material type: {source_type.value}",
             )
 
         relative_source = Path(subdirectory) / safe_name
@@ -668,7 +683,7 @@ async def upload_material(
             cohort_id=cohort.cohort_id,
             title=title.strip(),
             source=relative_source.as_posix(),
-            type=material_type.value,
+            type=source_type.value,
         )
 
         try:

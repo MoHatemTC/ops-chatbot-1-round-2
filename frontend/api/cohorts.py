@@ -50,6 +50,7 @@ def create_cohort(
         f"{BASE_URL}/kb/cohorts",
         headers=_auth_headers(token),
         json=payload,
+        timeout=15,
     )
     if not response.ok:
         raise CohortAPIError(_extract_error(response))
@@ -61,6 +62,7 @@ def update_cohort(token, cohort_id, **fields):
         f"{BASE_URL}/kb/cohorts/{cohort_id}",
         headers=_auth_headers(token),
         json=fields,
+        timeout=15,
     )
     if not response.ok:
         raise CohortAPIError(_extract_error(response))
