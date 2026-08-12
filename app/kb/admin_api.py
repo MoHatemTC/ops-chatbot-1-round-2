@@ -1,13 +1,13 @@
 """Ops Console KB admin API backed by the cohort database tables."""
 
-from __future__ import annotations
+
 
 import os
 import re
 import shutil
 from datetime import UTC, date, datetime
 from pathlib import Path
-
+from fastapi import Body
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
 from pydantic import BaseModel, Field, field_validator
 from sqlalchemy import text
@@ -321,7 +321,7 @@ async def get_cohort(
 @limiter.limit(settings.RATE_LIMIT_ENDPOINTS["kb_admin"][0])
 async def create_cohort(
     request: Request,
-    payload: CohortCreateIn,
+    payload: CohortCreateIn = Body(...),
     user: User = Depends(get_current_user),
 ):
     """Create a cohort in PostgreSQL and create its materials directory."""
