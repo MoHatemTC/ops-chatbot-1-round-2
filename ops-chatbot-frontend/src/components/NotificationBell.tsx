@@ -21,8 +21,14 @@ export default function NotificationBell() {
         loadNotifications();
     }, []);
 
-    function loadNotifications() {
-        api.get("/notifications").then((res) => setNotifications(res.data)).catch(() => setNotifications([]));
+    async function loadNotifications() {
+        try {
+            const res = await api.get("/notifications/");
+            setNotifications(res.data);
+        } catch (error) {
+            console.error("Failed to load notifications:", error);
+            setNotifications([]);
+        }
     }
 
     useEffect(() => {

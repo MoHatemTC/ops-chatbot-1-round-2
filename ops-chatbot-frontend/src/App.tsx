@@ -8,7 +8,7 @@ import Register from "./pages/Register";
 import Analytics from "./pages/Analytics";
 import Cohorts from "./pages/Cohorts";
 import Guide from "./pages/Guide";
-import KnowledgeBase from "./pages/Knowledgebase";
+import KnowledgeBase from "./pages/KnowledgeBase";
 import Reminders from "./pages/Reminders";
 import Settings from "./pages/Settings";
 import Escalations from "./pages/Escalations";
